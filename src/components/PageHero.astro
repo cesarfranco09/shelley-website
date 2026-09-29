@@ -1,0 +1,33 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede?: string;
+}
+const { eyebrow, title, lede } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="container page-hero__grid">
+    <div>
+      <span class="eyebrow reveal">{eyebrow}</span>
+      <h1 class="reveal" style="--delay:.08s" set:html={title} />
+      {lede && <p class="lede reveal" style="--delay:.16s">{lede}</p>}
+      <slot name="actions" />
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: end;
+  }
+  @media (min-width: 960px) {
+    .page-hero__grid:has(> :nth-child(2)) {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+</style>

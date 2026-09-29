@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+const topics = ['Wellness guidance', 'Safe beauty & home products', 'Nutrition', 'Essential oils', 'Cancer prevention information', 'Art, commissions & handmade', 'Puzzles', 'Something else'];
+---
+
+<Base title="Contact" description="Get in touch with Shelley Marks-Kramer of Healthy Communications in Malibu, California — by email, phone or message.">
+  <PageHero
+    eyebrow="Contact"
+    title='Let’s <em class="accent">connect</em>'
+    lede="Questions about a product, an ingredient, a painting or a puzzle? Shelley personally reads and answers every message."
+  />
+
+  <section class="section" style="padding-top:clamp(2rem, 4vw, 3rem)">
+    <div class="container contact">
+      <aside class="contact__info reveal">
+        <a class="info-card" href={`mailto:${site.email}`}>
+          <span class="icon-badge icon-badge--clay"><Icon name="mail" /></span>
+          <span><small>Email</small>{site.email}</span>
+        </a>
+        {
+          site.phones.map((p) => (
+            <a class="info-card" href={p.href}>
+              <span class="icon-badge">
+                <Icon name="phone" />
+              </span>
+              <span>
+                <small>{p.label}</small>
+                {p.display}
+              </span>
+            </a>
+          ))
+        }
+        <div class="info-card">
+          <span class="icon-badge icon-badge--gold"><Icon name="pin" /></span>
+          <span><small>Based in</small>{site.location}</span>
+        </div>
+        <div class="contact__social">
+          <p>Follow along</p>
+          <div>
+            <a href={site.social.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Instagram</a>
+            <a href={site.social.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={18} /> LinkedIn</a>
+            <a href={site.social.artSite} target="_blank" rel="noopener"><Icon name="palette" size={18} /> Art portfolio</a>
+          </div>
+        </div>
+      </aside>
+
+      <form class="card form reveal" style="--delay:.1s" data-contact-form novalidate>
+        <h2>Send a message</h2>
+        <p class="muted">Fill this in and your email app will open with everything ready to send.</p>
+        <div class="form__row">
+          <label>
+            <span>Your name</span>
+            <input name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Phone <em>(optional)</em></span>
+            <input name="phone" type="tel" autocomplete="tel" />
+          </label>
+        </div>
+        <label>
+          <span>I’m interested in</span>
+          <select name="topic">
+            {topics.map((t) => <option>{t}</option>)}
+          </select>
+        </label>
+        <label>
+          <span>Message</span>
+          <textarea name="message" rows="6" required placeholder="Tell Shelley a little about what you’re looking for…"></textarea>
+        </label>
+        <p class="form__error" data-error hidden>Please add your name and a short message.</p>
+        <button class="btn btn--clay" type="submit">Open email to send <Icon name="arrow" /></button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 3rem;
+    }
+  }
+  .contact__info {
+    display: grid;
+    gap: 1rem;
+  }
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+    border-radius: var(--radius);
+    background: var(--white);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--forest-deep);
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    transition:
+      transform 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+  a.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .info-card .icon-badge {
+    margin: 0;
+    flex: none;
+  }
+  .info-card small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .contact__social {
+    margin-top: 1rem;
+  }
+  .contact__social p {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 0.75rem;
+  }
+  .contact__social div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .contact__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--forest-deep);
+  }
+  .contact__social a:hover {
+    border-color: var(--clay);
+    color: var(--clay-deep);
+  }
+
+  .form {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+  }
+  .form h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+  .form > p.muted {
+    margin-top: -0.75rem;
+  }
+  .form__row {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .form label {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .form label span {
+    font-size: 0.9rem;
+    font-weight: 550;
+    color: var(--forest-deep);
+  }
+  .form label em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--ink-mute);
+  }
+  .form :is(input, select, textarea) {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgb(29 42 34 / 0.18);
+    background: var(--cream);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s,
+      background-color 0.2s;
+  }
+  .form :is(input, select, textarea):focus {
+    outline: none;
+    border-color: var(--sage);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgb(138 164 135 / 0.25);
+  }
+  .form textarea {
+    resize: vertical;
+  }
+  .form button {
+    justify-self: start;
+  }
+  .form__error {
+    color: var(--clay-deep);
+    font-size: 0.9rem;
+  }
+</style>
+
+<script>
+  import { site } from '../data/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+  const error = form.querySelector<HTMLElement>('[data-error]')!;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = String(data.get('name') ?? '').trim();
+    const message = String(data.get('message') ?? '').trim();
+    error.hidden = Boolean(name && message);
+    if (!name || !message) return;
+
+    const phone = String(data.get('phone') ?? '').trim();
+    const topic = String(data.get('topic') ?? '');
+    const body = `${message}\n\n— ${name}${phone ? `\n${phone}` : ''}`;
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(`${topic} — from ${name}`)}&body=${encodeURIComponent(body)}`;
+  });
+</script>

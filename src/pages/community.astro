@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Artwork from '../components/Artwork.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { mailto } from '../data/site';
+
+const resources = [
+  {
+    icon: 'home',
+    title: 'Safer body & home',
+    text: 'Information on chemicals in daily-use products, and resources for safe, healthy alternatives for skin, body, home and the environment.',
+  },
+  {
+    icon: 'users',
+    title: 'Men, women & families',
+    text: 'Health and wellness resources curated for every member of the household, from grown-ups to grandparents.',
+  },
+  {
+    icon: 'heart',
+    title: 'Children’s resources',
+    text: 'Third-party information on children’s health and wellbeing issues, with extra care for the youngest and most vulnerable.',
+  },
+  {
+    icon: 'ribbon',
+    title: 'Cancer prevention',
+    text: 'Educational material from the Cancer Prevention Coalition on reducing avoidable exposures in everyday life.',
+  },
+] as const;
+---
+
+<Base title="Community" description="Malibu Garden Club details, a legacy of interior flowers and plantscapes, and curated health and wellness resources for families from Shelley Marks-Kramer.">
+  <PageHero
+    eyebrow="Community & resources"
+    title='Rooted in <em class="accent">Malibu</em>, growing together'
+    lede="Beyond products and paintings, Shelley is a proud member of her local community — sharing gardens, knowledge and resources with neighbors near and far."
+  />
+
+  <!-- Garden club -->
+  <section class="section">
+    <div class="container split">
+      <div class="garden-art reveal">
+        <Artwork kind="garden" seed={51} ratio="4/5" />
+        <div class="garden-art__badge">
+          <span>Est.</span>
+          <strong>1956</strong>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow reveal">Malibu Garden Club</span>
+        <h2 class="reveal" style="margin-block:1rem 1.25rem">Where neighbors grow <em class="accent">beautiful things</em></h2>
+        <p class="lede reveal">
+          Established in 1956, the Malibu Garden Club brings together gardeners of every experience level to share
+          plants, ideas and a love of our coastal landscape.
+        </p>
+        <ul class="meet reveal">
+          <li>
+            <span class="icon-badge"><Icon name="calendar" /></span>
+            <div><strong>When</strong><span>First Wednesday of every month</span></div>
+          </li>
+          <li>
+            <span class="icon-badge icon-badge--clay"><Icon name="clock" /></span>
+            <div><strong>Time</strong><span>9:30 – 11:30 am</span></div>
+          </li>
+          <li>
+            <span class="icon-badge icon-badge--gold"><Icon name="pin" /></span>
+            <div><strong>Where</strong><span>Point Dume Clubhouse, 29500 Heathercliff Road, Malibu</span></div>
+          </li>
+        </ul>
+        <p class="muted reveal" style="font-size:.9rem">Meeting details can change — please reach out to confirm before visiting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plantscapes legacy -->
+  <section class="section section--paper">
+    <div class="container split">
+      <div class="reveal">
+        <span class="eyebrow">Since 1974</span>
+        <h2 style="margin-block:1rem 1.25rem">Interior flowers &amp; plantscapes</h2>
+        <div class="prose">
+          <p>
+            Long before Healthy Communications, Shelley founded Creative Environments Flowers &amp; Plantscapes —
+            designing tropical paradises of interior flowers, plants and artwork for homes, offices, restaurants and
+            showrooms, as well as parties, weddings and bar/bat mitzvahs.
+          </p>
+          <p>That love of living, breathing spaces still shapes everything she does today.</p>
+        </div>
+      </div>
+      <div class="plant-grid reveal" style="--delay:.1s">
+        <Artwork kind="window" seed={52} ratio="3/4" />
+        <Artwork kind="garden" seed={53} ratio="3/4" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section class="section" id="resources">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Links &amp; resources</span>
+        <h2>Helpful information for <em class="accent">every</em> household</h2>
+        <p class="lede">Shelley keeps a curated library of trusted resources. Ask and she’ll point you to the right ones for your situation.</p>
+      </div>
+      <div class="grid grid-4">
+        {
+          resources.map((r, i) => (
+            <div class="card card--hover reveal" style={`--delay:${i * 0.06}s`}>
+              <span class="icon-badge"><Icon name={r.icon} /></span>
+              <h3>{r.title}</h3>
+              <p>{r.text}</p>
+              <a href={mailto(`Resources: ${r.title}`)} class="link-arrow" style="margin-top:1rem">
+                Request resources <Icon name="arrow" size={16} />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .garden-art {
+    position: relative;
+    max-width: 480px;
+  }
+  .garden-art :global(.artwork) {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+  .garden-art__badge {
+    position: absolute;
+    right: -1rem;
+    top: 2rem;
+    display: grid;
+    place-items: center;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--clay);
+    color: #fff;
+    line-height: 1;
+    box-shadow: var(--shadow);
+    rotate: 8deg;
+  }
+  .garden-art__badge span {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 1.4rem;
+  }
+  .garden-art__badge strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.9rem;
+    margin-bottom: 1.4rem;
+  }
+  @media (max-width: 600px) {
+    .garden-art__badge {
+      right: 0.5rem;
+    }
+  }
+  .meet {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    margin-block: 2rem 1.25rem;
+  }
+  .meet li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .meet .icon-badge {
+    margin: 0;
+    flex: none;
+  }
+  .meet div {
+    display: grid;
+  }
+  .meet strong {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .meet span {
+    color: var(--forest-deep);
+  }
+  .plant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .plant-grid :global(.artwork:nth-child(2)) {
+    margin-top: 3rem;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+  .card p {
+    flex: 1;
+  }
+</style>

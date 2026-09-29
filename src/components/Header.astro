@@ -1,0 +1,227 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <Logo />
+
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a href="/contact/" class="btn btn--clay site-header__cta">Get in touch</a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Open menu</span>
+      <Icon name="menu" class="menu-toggle__open" />
+      <Icon name="close" class="menu-toggle__close" />
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        {
+          nav.map((item, i) => (
+            <li style={`--i:${i}`}>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li style={`--i:${nav.length}`}>
+          <a href="/contact/" aria-current={isActive('/contact/') ? 'page' : undefined}>Contact</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="mobile-menu__contact">
+      <a href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a>
+      <a href={site.phones[0].href}><Icon name="phone" size={18} /> {site.phones[0].display}</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    padding-block: 1rem;
+    transition:
+      padding 0.4s var(--ease),
+      background-color 0.4s,
+      box-shadow 0.4s;
+  }
+  .site-header.is-scrolled {
+    padding-block: 0.6rem;
+    background: rgb(251 247 240 / 0.82);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .site-nav {
+    margin-left: auto;
+  }
+  .site-nav ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+  }
+  .site-nav a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition:
+      color 0.25s,
+      background-color 0.25s;
+  }
+  .site-nav a:hover {
+    color: var(--forest-deep);
+    background: rgb(29 42 34 / 0.05);
+  }
+  .site-nav a[aria-current='page'] {
+    color: var(--forest-deep);
+    background: var(--sage-soft);
+  }
+  .site-header__cta {
+    padding: 0.7rem 1.2rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    margin-left: auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgb(255 255 255 / 0.7);
+    place-items: center;
+    cursor: pointer;
+  }
+  .menu-toggle :global(.menu-toggle__close) {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__open) {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__close) {
+    display: block;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    padding: 6.5rem var(--gutter) 2rem;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  .mobile-menu[hidden] {
+    display: none;
+  }
+  .mobile-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  .mobile-menu li {
+    border-bottom: 1px solid var(--line);
+    animation: menu-in 0.6s var(--ease) both;
+    animation-delay: calc(var(--i) * 50ms);
+  }
+  .mobile-menu li a {
+    display: block;
+    padding: 1rem 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--forest-deep);
+    text-decoration: none;
+  }
+  .mobile-menu li a[aria-current='page'] {
+    color: var(--clay);
+    font-style: italic;
+  }
+  .mobile-menu__contact {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .mobile-menu__contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+
+  @media (max-width: 1020px) {
+    .site-nav,
+    .site-header__cta {
+      display: none;
+    }
+    .menu-toggle {
+      display: grid;
+    }
+  }
+  :global(body.menu-open) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.sr-only')!.textContent = open ? 'Close menu' : 'Open menu';
+    menu.hidden = !open;
+    document.body.classList.toggle('menu-open', open);
+    header?.classList.toggle('is-scrolled', open || window.scrollY > 12);
+  };
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+  window.matchMedia('(min-width: 1021px)').addEventListener('change', (e) => e.matches && setOpen(false));
+</script>

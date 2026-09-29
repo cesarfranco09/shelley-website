@@ -1,0 +1,646 @@
+---
+import Base from '../layouts/Base.astro';
+import Artwork from '../components/Artwork.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const pillars = [
+  {
+    icon: 'shield',
+    tone: '',
+    title: 'Safe products for body & home',
+    text: 'Clean, non-toxic personal care, beauty and household essentials — and the know-how to spot harmful ingredients hiding on the label.',
+    href: '/wellness/#products',
+  },
+  {
+    icon: 'leaf',
+    tone: 'icon-badge--clay',
+    title: 'Nutrition & essential oils',
+    text: 'Thoughtfully chosen nutritional products and pure, unadulterated essential oils that have been part of Shelley’s own wellness routine for 25 years.',
+    href: '/wellness/#products',
+  },
+  {
+    icon: 'palette',
+    tone: 'icon-badge--gold',
+    title: 'Art that heals',
+    text: 'Impressionist oceanscapes, flowerscapes and mosaics, plus handmade gemstone jewelry, embroidery and puzzles — made to bring calm and joy.',
+    href: '/art/',
+  },
+] as const;
+
+const stats = [
+  { value: '1974', label: 'Launched her first business in Los Angeles' },
+  { value: '1983', label: 'First art exhibition — Santa Monica to NYC since' },
+  { value: '25+', label: 'Years sharing pure essential oils' },
+  { value: 'LA', label: 'Local director, Cancer Prevention Coalition' },
+];
+
+const tips = [
+  { title: 'Read the whole label', text: 'Front-of-pack claims like “natural” or “pure” aren’t regulated. The ingredient list tells the real story.' },
+  { title: 'Question “fragrance”', text: 'A single word can stand in for dozens of undisclosed chemicals. Look for products that list what’s inside.' },
+  { title: 'Start with daily-use items', text: 'Lotions, soaps and cleaners you use every day add up. Swapping those first makes the biggest difference.' },
+];
+
+const gallery = [
+  { kind: 'ocean', seed: 3, title: 'Malibu Morning', medium: 'Acrylic' },
+  { kind: 'garden', seed: 7, title: 'Flowerscape', medium: 'Watercolor' },
+  { kind: 'window', seed: 2, title: 'Windowscape', medium: 'Acrylic' },
+  { kind: 'mosaic', seed: 4, title: 'Sun Mosaic', medium: 'Mosaic' },
+  { kind: 'sunset', seed: 5, title: 'Evening Tide', medium: 'Digital' },
+] as const;
+
+const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pure essential oils', 'Impressionist art', 'Handmade gifts', 'Cancer prevention education', 'Malibu community'];
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow reveal">Health · Wellness · Art</span>
+        <h1 class="reveal" style="--delay:.08s">
+          Healthier choices for <em class="accent">body, home</em> &amp; spirit.
+        </h1>
+        <p class="lede reveal" style="--delay:.16s">
+          Shelley Marks-Kramer helps people understand what’s really in the products they use every day — and
+          discover safe, beautiful alternatives. Friendly guidance, trusted products and art made to heal.
+        </p>
+        <div class="btn-row reveal" style="--delay:.24s">
+          <a href="/wellness/" class="btn">Explore wellness <Icon name="arrow" /></a>
+          <a href="/art/" class="btn btn--ghost">View the art</a>
+        </div>
+        <div class="hero__trust reveal" style="--delay:.32s">
+          <div class="hero__avatars" aria-hidden="true">
+            <span><Icon name="leaf" size={16} /></span>
+            <span><Icon name="heart" size={16} /></span>
+            <span><Icon name="sparkles" size={16} /></span>
+          </div>
+          <p><strong>Cancer survivor, educator &amp; artist</strong><br />on a mission to make everyday living safer.</p>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <div class="hero__frame hero__frame--a"><Artwork kind="ocean" seed={11} ratio="3/4" eager /></div>
+        <div class="hero__frame hero__frame--b"><Artwork kind="garden" seed={4} ratio="1/1" eager /></div>
+        <div class="hero__frame hero__frame--c"><Artwork kind="mosaic" seed={2} ratio="1/1" eager /></div>
+        <div class="hero__badge">
+          <span class="hero__badge-num">1974</span>
+          <span>creating healthy,<br />beautiful spaces</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {[...marquee, ...marquee].map((m) => <span><Icon name="sparkles" size={16} />{m}</span>)}
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow">How I can help</span>
+        <h2>Three paths to a <em class="accent">healthier</em> life</h2>
+        <p class="lede">Simple, honest guidance — never pressure. Start wherever feels right for you.</p>
+      </div>
+      <div class="grid grid-3">
+        {
+          pillars.map((p, i) => (
+            <a href={p.href} class="card card--hover pillar reveal" style={`--delay:${i * 0.08}s`}>
+              <span class={`icon-badge ${p.tone}`}>
+                <Icon name={p.icon} />
+              </span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              <span class="link-arrow">
+                Learn more <Icon name="arrow" size={16} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section section--paper story">
+    <div class="container split">
+      <div class="story__media reveal">
+        <div class="portrait">
+          <Artwork kind="garden" seed={21} ratio="4/5" />
+          <div class="portrait__caption">
+            <span class="portrait__name">Shelley Marks-Kramer</span>
+            <span>Educator · Beauty consultant · Artist</span>
+          </div>
+        </div>
+        <div class="story__quote">
+          <Icon name="quote" size={22} />
+          <p>My second-half-of-life mission is helping people understand what’s really in the products they use every day.</p>
+        </div>
+      </div>
+      <div class="story__copy">
+        <span class="eyebrow reveal">Meet Shelley</span>
+        <h2 class="reveal">A lifetime of creating <em class="accent">healthier</em> spaces</h2>
+        <div class="prose reveal">
+          <p>
+            Shelley has been happily self-employed for more than three-quarters of her life. In 1974 she founded
+            Creative Environments Flowers &amp; Plantscapes, filling homes, offices, restaurants and celebrations with
+            living, breathing beauty.
+          </p>
+          <p>
+            As a cancer survivor, she turned her energy toward education — becoming director of the local Los Angeles
+            office of the Cancer Prevention Coalition, earning certification in nutritional consulting, and teaching
+            families how to choose safer products for body and home.
+          </p>
+        </div>
+        <dl class="stats reveal">
+          {
+            stats.map((s) => (
+              <div>
+                <dt>{s.value}</dt>
+                <dd>{s.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a href="/about/" class="btn btn--ghost reveal">Read Shelley’s story <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INGREDIENT AWARENESS -->
+  <section class="section">
+    <div class="container split split--wide-left">
+      <div>
+        <div class="section-head reveal">
+          <span class="eyebrow">Be a savvy consumer</span>
+          <h2>Know what’s in your <em class="accent">everyday</em> products</h2>
+          <p class="lede">
+            Small, simple swaps can reduce your exposure to questionable ingredients. Here’s where Shelley suggests
+            starting.
+          </p>
+        </div>
+        <ol class="tips">
+          {
+            tips.map((t, i) => (
+              <li class="reveal" style={`--delay:${i * 0.08}s`}>
+                <span class="tips__num">0{i + 1}</span>
+                <div>
+                  <h3>{t.title}</h3>
+                  <p>{t.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <a href="/wellness/#consumer-guide" class="link-arrow mt-lg reveal">See the full consumer guide <Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="label-card reveal" aria-hidden="true">
+        <div class="label-card__head">
+          <Icon name="search" size={18} />
+          <span>Ingredient check</span>
+        </div>
+        <ul>
+          <li class="ok"><span>Aloe barbadensis leaf juice</span><em>Plant-based</em></li>
+          <li class="ok"><span>Cocos nucifera (coconut) oil</span><em>Plant-based</em></li>
+          <li class="warn"><span>Fragrance / parfum</span><em>Undisclosed</em></li>
+          <li class="ok"><span>Tocopherol (vitamin E)</span><em>Nourishing</em></li>
+          <li class="warn"><span>Synthetic dyes</span><em>Look closer</em></li>
+        </ul>
+        <div class="label-card__foot">
+          <span class="pill"><Icon name="shield" size={14} /> Learn to read labels with confidence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ART SHOWCASE -->
+  <section class="section section--forest art-show">
+    <div class="container">
+      <div class="art-show__head">
+        <div class="section-head reveal">
+          <span class="eyebrow" style="color:#f3b79f">From the studio</span>
+          <h2>Art made to <em class="accent" style="color:#f3b79f">bring calm</em></h2>
+          <p class="lede" style="color:rgb(231 239 230 / .8)">
+            Oceanscapes, landscapes, windowscapes and flowerscapes in acrylic, watercolor, mosaic and digital media —
+            exhibited from Santa Monica to New York City and collected across the U.S.
+          </p>
+        </div>
+        <a href="/art/" class="btn btn--light reveal">Visit the gallery <Icon name="arrow" /></a>
+      </div>
+    </div>
+    <div class="art-rail" tabindex="0" aria-label="Featured artwork">
+      {
+        gallery.map((g, i) => (
+          <a href="/art/" class={`art-rail__item reveal ${i % 2 ? 'is-offset' : ''}`} style={`--delay:${i * 0.06}s`}>
+            <Artwork kind={g.kind} seed={g.seed} ratio="4/5" />
+            <span class="art-rail__meta">
+              <strong>{g.title}</strong>
+              <span>{g.medium}</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding-block: clamp(8rem, 14vw, 11rem) clamp(4rem, 8vw, 6rem);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(45% 55% at 85% 20%, rgb(196 105 74 / 0.18), transparent 65%),
+      radial-gradient(40% 50% at 60% 90%, rgb(143 188 203 / 0.28), transparent 65%),
+      radial-gradient(45% 60% at 0% 30%, rgb(138 164 135 / 0.25), transparent 65%),
+      var(--cream);
+  }
+  .hero__grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 980px) {
+    .hero__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+  .hero h1 {
+    margin-block: 1.3rem 1.5rem;
+  }
+  .hero .btn-row {
+    margin-top: 2.2rem;
+  }
+  .hero__trust {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .hero__trust strong {
+    color: var(--forest-deep);
+  }
+  .hero__avatars {
+    display: flex;
+  }
+  .hero__avatars span {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--cream);
+    background: var(--sage-soft);
+    color: var(--forest);
+    margin-left: -10px;
+  }
+  .hero__avatars span:first-child {
+    margin-left: 0;
+  }
+  .hero__avatars span:nth-child(2) {
+    background: var(--clay-soft);
+    color: var(--clay-deep);
+  }
+  .hero__avatars span:nth-child(3) {
+    background: #f6e8c7;
+    color: #8a6415;
+  }
+
+  .hero__art {
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    max-width: 560px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .hero__frame {
+    position: absolute;
+    border-radius: var(--radius-lg);
+    padding: 10px;
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+    animation: float 9s ease-in-out infinite;
+  }
+  .hero__frame :global(.artwork) {
+    border-radius: calc(var(--radius-lg) - 8px);
+  }
+  .hero__frame--a {
+    width: 60%;
+    left: 4%;
+    top: 0;
+    rotate: -4deg;
+  }
+  .hero__frame--b {
+    width: 46%;
+    right: 0;
+    top: 18%;
+    rotate: 5deg;
+    animation-delay: -3s;
+  }
+  .hero__frame--c {
+    width: 38%;
+    left: 30%;
+    bottom: 0;
+    rotate: -2deg;
+    animation-delay: -6s;
+  }
+  .hero__badge {
+    position: absolute;
+    right: 4%;
+    bottom: 10%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 999px;
+    background: var(--forest);
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    box-shadow: var(--shadow);
+  }
+  .hero__badge-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: #f3b79f;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  /* Marquee */
+  .marquee {
+    overflow: hidden;
+    border-block: 1px solid var(--line);
+    background: var(--white);
+    padding-block: 1.1rem;
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .marquee__track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: marquee 45s linear infinite;
+  }
+  .marquee span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--forest);
+    white-space: nowrap;
+  }
+  .marquee span :global(svg) {
+    color: var(--clay);
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - 1.5rem));
+    }
+  }
+
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .pillar p {
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Story */
+  .story__media {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+  .portrait {
+    position: relative;
+    max-width: 460px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .portrait :global(.artwork) {
+    border-radius: 0;
+  }
+  .portrait__caption {
+    position: absolute;
+    inset: 0 0 auto;
+    display: grid;
+    padding: 1.4rem 1.5rem 4rem;
+    background: linear-gradient(rgb(24 43 32 / 0.75), transparent);
+    color: rgb(255 255 255 / 0.8);
+    font-size: 0.85rem;
+  }
+  .portrait__name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  .story__quote {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    max-width: 300px;
+    padding: 1.4rem 1.5rem;
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.35;
+    color: var(--forest-deep);
+  }
+  .story__quote :global(svg) {
+    color: var(--clay);
+    margin-bottom: 0.6rem;
+  }
+  @media (max-width: 600px) {
+    .story__quote {
+      position: relative;
+      margin: -2.5rem 0 0 auto;
+      max-width: 88%;
+    }
+    .story__media {
+      padding-bottom: 0;
+    }
+  }
+  .story__copy h2 {
+    margin-block: 1rem 1.5rem;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+    margin-block: 2.5rem;
+    padding-block: 2rem;
+    border-block: 1px solid var(--line);
+  }
+  .stats dt {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.4vw, 2.6rem);
+    line-height: 1;
+    color: var(--clay);
+    margin-bottom: 0.4rem;
+  }
+  .stats dd {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  /* Tips */
+  .tips {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .tips li {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .tips__num {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--clay);
+    padding-top: 0.2rem;
+  }
+  .tips h3 {
+    margin-bottom: 0.3rem;
+  }
+  .tips p {
+    color: var(--ink-soft);
+  }
+  .label-card {
+    align-self: center;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 1.6rem;
+    rotate: 2deg;
+    border: 1px solid var(--line);
+  }
+  .label-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--forest-deep);
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .label-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .label-card li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.93rem;
+  }
+  .label-card li em {
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    align-self: center;
+  }
+  .label-card li.ok em {
+    background: var(--sage-soft);
+    color: var(--forest);
+  }
+  .label-card li.warn em {
+    background: var(--clay-soft);
+    color: var(--clay-deep);
+  }
+  .label-card__foot {
+    padding-top: 1.2rem;
+  }
+
+  /* Art showcase */
+  .art-show {
+    overflow: hidden;
+  }
+  .art-show__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .art-show__head .section-head {
+    margin-bottom: 0;
+  }
+  .art-rail {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 0 var(--gutter) 2.5rem max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.3) transparent;
+  }
+  .art-rail__item {
+    flex: 0 0 clamp(230px, 26vw, 320px);
+    scroll-snap-align: start;
+    text-decoration: none;
+    color: #fff;
+  }
+  .art-rail__item.is-offset {
+    margin-top: 2.5rem;
+  }
+  .art-rail__item :global(.artwork) {
+    transition: transform 0.6s var(--ease);
+  }
+  .art-rail__item:hover :global(.artwork) {
+    transform: scale(1.03) rotate(-0.6deg);
+  }
+  .art-rail__meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.9rem;
+    font-size: 0.9rem;
+  }
+  .art-rail__meta strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.15rem;
+  }
+  .art-rail__meta span {
+    color: rgb(231 239 230 / 0.6);
+  }
+</style>

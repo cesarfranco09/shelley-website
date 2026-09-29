@@ -1,0 +1,61 @@
+---
+interface Props {
+  light?: boolean;
+}
+const { light = false } = Astro.props;
+---
+
+<a href="/" class:list={['logo', { 'logo--light': light }]} aria-label="Healthy Communications — home">
+  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+    <circle cx="20" cy="20" r="19" fill="currentColor" opacity="0.12" />
+    <path d="M20 31c-6-4-10-8.3-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 30 18c0 4.7-4 9-10 13Z" fill="var(--clay)" />
+    <path d="M20 29.5c0-6 1.8-10.4 6.5-13.8-5.6.7-8.5 4.5-8.8 9.6" fill="none" stroke="var(--forest-deep)" stroke-width="1.6" stroke-linecap="round" />
+    <path d="M26.5 15.7c-1.9 3.7-4.6 5.4-7.6 5.8.5-3.4 3.1-5.6 7.6-5.8Z" fill="var(--sage)" />
+  </svg>
+  <span class="logo__text">
+    <span class="logo__name">Healthy Communications</span>
+    <span class="logo__by">by Shelley Marks-Kramer</span>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--forest-deep);
+  }
+  .logo__mark {
+    width: 42px;
+    height: 42px;
+    flex: none;
+    transition: transform 0.6s var(--ease);
+  }
+  .logo:hover .logo__mark {
+    transform: rotate(-10deg) scale(1.05);
+  }
+  .logo__text {
+    display: grid;
+    line-height: 1.1;
+  }
+  .logo__name {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    letter-spacing: -0.01em;
+  }
+  .logo__by {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-mute);
+  }
+  .logo--light {
+    color: #fff;
+  }
+  .logo--light .logo__by {
+    color: rgb(255 255 255 / 0.65);
+  }
+  .logo--light .logo__mark path:nth-of-type(2) {
+    stroke: #fff;
+  }
+</style>

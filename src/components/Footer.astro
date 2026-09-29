@@ -1,0 +1,156 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Logo light />
+        <p>
+          Educating and inspiring healthier choices for body, home and spirit — with safe products, whole-food
+          nutrition, pure essential oils and art made with love in Malibu.
+        </p>
+        <div class="social">
+          <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon name="instagram" size={20} /></a>
+          <a href={site.social.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><Icon name="linkedin" size={20} /></a>
+          <a href={site.social.artSite} target="_blank" rel="noopener" aria-label="Shelley's art portfolio"><Icon name="palette" size={20} /></a>
+        </div>
+      </div>
+
+      <nav class="site-footer__col" aria-label="Footer">
+        <h2>Explore</h2>
+        <ul>
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__col">
+        <h2>Get in touch</h2>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          {site.phones.map((p) => <li><a href={p.href}>{p.display}</a> <span>· {p.label}</span></li>)}
+          <li><span>{site.location}</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="site-footer__disclaimer">
+      The information on this site is for educational purposes only and is not intended to diagnose, treat, cure or
+      prevent any disease. Please consult your physician or a qualified health professional before making changes to
+      your health routine.
+    </p>
+
+    <div class="site-footer__bottom">
+      <span>© {year} {site.name} · {site.owner}. All rights reserved.</span>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    background: var(--forest-deep);
+    color: rgb(231 239 230 / 0.78);
+    padding-block: clamp(4rem, 8vw, 6rem) 2rem;
+    font-size: 0.95rem;
+    overflow: hidden;
+  }
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    right: -160px;
+    top: -220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(196 105 74 / 0.22), transparent 65%);
+    pointer-events: none;
+  }
+  .site-footer__top {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 820px) {
+    .site-footer__top {
+      grid-template-columns: 1.6fr 1fr 1.2fr;
+    }
+  }
+  .site-footer__brand p {
+    margin-block: 1.25rem 1.5rem;
+    max-width: 42ch;
+  }
+  .social {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .social a {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    color: #fff;
+    transition:
+      background-color 0.3s,
+      transform 0.3s var(--ease);
+  }
+  .social a:hover {
+    background: var(--clay);
+    border-color: var(--clay);
+    transform: translateY(-3px);
+  }
+  .site-footer__col h2 {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 1.1rem;
+  }
+  .site-footer__col ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .site-footer a {
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .site-footer__col a:hover {
+    color: #fff;
+  }
+  .site-footer__col span {
+    color: rgb(231 239 230 / 0.5);
+  }
+  .site-footer__disclaimer {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    font-size: 0.82rem;
+    color: rgb(231 239 230 / 0.5);
+    max-width: 90ch;
+  }
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgb(231 239 230 / 0.55);
+  }
+  .to-top:hover {
+    color: #fff;
+  }
+</style>

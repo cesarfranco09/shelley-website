@@ -1,0 +1,86 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'Ready for healthier, happier choices?',
+  text = 'Whether you have a question about a product, want to start a safer home routine, or would love to own a piece of art — Shelley would love to hear from you.',
+} = Astro.props;
+---
+
+<section class="section--tight">
+  <div class="container">
+    <div class="cta reveal">
+      <div class="cta__glow" aria-hidden="true"></div>
+      <div class="cta__content">
+        <span class="eyebrow">Let's talk</span>
+        <h2 set:html={title} />
+        <p>{text}</p>
+      </div>
+      <div class="cta__actions">
+        <a href="/contact/" class="btn btn--light">Send a message <Icon name="arrow" /></a>
+        <a href={site.phones[0].href} class="cta__phone"><Icon name="phone" size={18} /> {site.phones[0].display}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    padding: clamp(2.5rem, 6vw, 4.5rem);
+    border-radius: var(--radius-lg);
+    background: var(--forest);
+    color: rgb(231 239 230 / 0.85);
+  }
+  @media (min-width: 900px) {
+    .cta {
+      grid-template-columns: 1.4fr auto;
+    }
+  }
+  .cta__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(40% 80% at 100% 0%, rgb(196 105 74 / 0.45), transparent 70%),
+      radial-gradient(40% 70% at 0% 100%, rgb(138 164 135 / 0.35), transparent 70%);
+  }
+  .cta .eyebrow {
+    color: #f3b79f;
+  }
+  .cta h2 {
+    color: #fff;
+    margin-block: 0.9rem 1rem;
+    max-width: 18ch;
+  }
+  .cta p {
+    max-width: 56ch;
+  }
+  .cta__actions {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+  .cta__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding-left: 0.4rem;
+  }
+  .cta__phone:hover {
+    text-decoration: underline;
+  }
+</style>

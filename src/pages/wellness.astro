@@ -1,0 +1,355 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { mailto } from '../data/site';
+
+const services = [
+  { icon: 'users', title: 'One-on-one guidance', text: 'A friendly conversation about your routine, your concerns and your goals — and a simple plan to make safer swaps.' },
+  { icon: 'search', title: 'Product & label reviews', text: 'Not sure about something in your bathroom cabinet or under the sink? Shelley will help you decode the ingredient list.' },
+  { icon: 'leaf', title: 'Nutritional consulting', text: 'Certified guidance on clean, high-quality nutritional products that support whole-body wellness.' },
+  { icon: 'home', title: 'A healthier home', text: 'From laundry to surface cleaners to air fresheners, learn where hidden chemicals live and what to use instead.' },
+] as const;
+
+const products = [
+  {
+    icon: 'leaf',
+    tone: '',
+    tag: 'Nutrition',
+    title: 'Clean nutritional products',
+    text: 'Shelley recommends Modere, a company that has been manufacturing clean and safe consumer products for more than 30 years — from nutritional supplements to personal care.',
+    points: ['Transparent ingredients', 'Decades-long manufacturing record', 'Supports daily wellness'],
+    subject: 'Question about nutritional products',
+  },
+  {
+    icon: 'sparkles',
+    tone: 'icon-badge--clay',
+    tag: 'Beauty & home',
+    title: 'Safe beauty & household care',
+    text: 'For safety-conscious cosmetics, skin care and home care, Shelley works with Pure Haven — products formulated without the ingredients she teaches people to avoid.',
+    points: ['Clean beauty cosmetics', 'Body, bath & skin care', 'Non-toxic home cleaning'],
+    subject: 'Question about safe beauty & home products',
+  },
+  {
+    icon: 'droplet',
+    tone: 'icon-badge--gold',
+    tag: 'Essential oils',
+    title: 'Pure, unadulterated essential oils',
+    text: 'Organic essential oils from Time Labs, a private-label company with more than 30 years in business. These oils have been part of Shelley’s own health collection for 25 years.',
+    points: ['Pure & unadulterated', 'Organic options', 'Trusted for 25+ years'],
+    subject: 'Question about essential oils',
+  },
+] as const;
+
+const guide = [
+  { title: 'Read the full ingredient list', text: 'Words like “natural,” “pure” or “green” on the front of a package aren’t regulated. Turn it over — the ingredient list is where the truth lives.' },
+  { title: 'Be cautious with “fragrance”', text: '“Fragrance” or “parfum” can represent a blend of many undisclosed ingredients. Favor brands that tell you exactly what’s inside.' },
+  { title: 'Start with what stays on your skin', text: 'Lotions, deodorants, makeup and sunscreen remain on your body for hours. These are smart first swaps.' },
+  { title: 'Look beyond the bathroom', text: 'Dish soap, laundry detergent, surface sprays and air fresheners all affect the air you breathe at home.' },
+  { title: 'Protect the little ones', text: 'Babies and children are more vulnerable to exposures. Choose gentle, simple formulas for their care products.' },
+  { title: 'Swap gradually — no guilt', text: 'You don’t need to throw everything out today. Replace items as they run out, and build a cleaner routine over time.' },
+];
+
+const faqs = [
+  { q: 'Do I need to replace everything at once?', a: 'Not at all. Shelley recommends replacing products as they run out, starting with the ones you use most often. Small steps add up.' },
+  { q: 'Can you help me choose products for my whole family?', a: 'Yes. Share who you’re shopping for — kids, partners, sensitive skin, special diets — and Shelley will suggest options that fit.' },
+  { q: 'Is this medical advice?', a: 'No. Shelley provides education and product guidance. For any medical condition, please work with your physician or a qualified health professional.' },
+  { q: 'How do I get started?', a: 'Send a message or call. Tell Shelley a little about your routine and what you’d like to change, and she’ll take it from there.' },
+];
+---
+
+<Base title="Wellness & Safe Products" description="Guidance on safe, non-toxic personal care, beauty and household products, clean nutrition and pure essential oils — plus a consumer guide to reading labels, from Shelley Marks-Kramer.">
+  <PageHero
+    eyebrow="Health & wellness"
+    title='Safer products. <em class="accent">Simpler</em> choices.'
+    lede="Every day we put dozens of products on our skin and into our homes. Shelley helps you understand what’s in them — and find trusted, non-toxic alternatives that really work."
+  >
+    <div slot="actions" class="btn-row reveal" style="--delay:.24s; margin-top: 2rem">
+      <a href="#products" class="btn">Browse product families <Icon name="arrow" /></a>
+      <a href="#consumer-guide" class="btn btn--ghost">Consumer guide</a>
+    </div>
+    <div class="hero-stat reveal" style="--delay:.3s">
+      <div class="hero-stat__ring"><Icon name="shield" size={34} /></div>
+      <p><strong>Education, not pressure.</strong> Learn to read labels and make confident decisions for your family.</p>
+    </div>
+  </PageHero>
+
+  <!-- How I can help -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">How I can help you</span>
+        <h2>Personal guidance for your health product decisions</h2>
+      </div>
+      <div class="grid grid-4">
+        {
+          services.map((s, i) => (
+            <div class="card card--hover reveal" style={`--delay:${i * 0.06}s`}>
+              <span class="icon-badge"><Icon name={s.icon} /></span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section section--paper" id="products">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow">Trusted product families</span>
+        <h2>Clean choices from companies with <em class="accent">decades</em> of trust</h2>
+        <p class="lede">Shelley only recommends products she uses herself, from established manufacturers with long track records.</p>
+      </div>
+      <div class="grid grid-3">
+        {
+          products.map((p, i) => (
+            <article class="card product reveal" style={`--delay:${i * 0.08}s`}>
+              <div class="product__top">
+                <span class={`icon-badge ${p.tone}`}><Icon name={p.icon} /></span>
+                <span class="pill">{p.tag}</span>
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              <ul class="check-list">
+                {p.points.map((pt) => <li>{pt}</li>)}
+              </ul>
+              <a href={mailto(p.subject)} class="link-arrow">
+                Ask Shelley <Icon name="arrow" size={16} />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Cancer prevention -->
+  <section class="section section--forest" id="cancer-prevention">
+    <div class="container split">
+      <div class="reveal">
+        <span class="eyebrow" style="color:#f3b79f">Cancer: a focus on prevention</span>
+        <h2 style="margin-top:1rem">Awareness is the first step toward prevention</h2>
+      </div>
+      <div class="prose prose--light reveal" style="--delay:.1s">
+        <p>
+          Shelley serves as director of the local Los Angeles office of the Cancer Prevention Coalition, founded by the
+          late Dr. Samuel S. Epstein, M.D., a pioneering voice on avoidable environmental and consumer-product causes
+          of cancer.
+        </p>
+        <p>
+          As a survivor herself, she shares information about reducing exposure to potentially harmful ingredients in
+          everyday products — so you and your loved ones can make informed choices.
+        </p>
+        <a href={mailto('Cancer prevention information')} class="btn btn--light" style="margin-top:1.5rem">
+          Request information <Icon name="arrow" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consumer guide -->
+  <section class="section" id="consumer-guide">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Your decisions as a health product consumer</span>
+        <h2>Six simple habits of a <em class="accent">savvy</em> shopper</h2>
+      </div>
+      <ol class="guide">
+        {
+          guide.map((g, i) => (
+            <li class="reveal" style={`--delay:${(i % 3) * 0.07}s`}>
+              <span class="guide__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{g.title}</h3>
+              <p>{g.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--paper">
+    <div class="container split split--wide-left" style="align-items:start">
+      <div class="faq">
+        <div class="section-head reveal">
+          <span class="eyebrow">Questions</span>
+          <h2>Good to know</h2>
+        </div>
+        {
+          faqs.map((f) => (
+            <details class="reveal">
+              <summary>
+                {f.q}
+                <span aria-hidden="true" class="faq__plus" />
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+      <aside class="card note reveal">
+        <span class="icon-badge icon-badge--sky"><Icon name="book" /></span>
+        <h3>A gentle reminder</h3>
+        <p>
+          The information shared here is educational and is not intended to diagnose, treat, cure or prevent any
+          disease. Always talk with your physician before changing your health routine.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand title='Questions about a product or ingredient?' text="Send Shelley a photo of a label or a list of what you use. She’ll help you make sense of it — and suggest simple, safer swaps." />
+</Base>
+
+<style>
+  .hero-stat {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.75);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow);
+    color: var(--ink-soft);
+    max-width: 420px;
+    justify-self: end;
+  }
+  .hero-stat strong {
+    color: var(--forest-deep);
+  }
+  .hero-stat__ring {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(var(--clay) 0 70%, var(--sage-soft) 70% 100%);
+    color: var(--forest);
+    position: relative;
+  }
+  .hero-stat__ring::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--white);
+  }
+  .hero-stat__ring :global(svg) {
+    position: relative;
+  }
+
+  .product {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .product__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .product .check-list {
+    margin-block: 1.2rem 1.6rem;
+    flex: 1;
+  }
+
+  .prose--light p {
+    color: rgb(231 239 230 / 0.85);
+    font-size: 1.1rem;
+  }
+
+  .guide {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .guide li {
+    padding: 2rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.3s;
+  }
+  .guide li:hover {
+    background: var(--white);
+  }
+  .guide__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: var(--clay);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+  .guide h3 {
+    margin-bottom: 0.5rem;
+  }
+  .guide p {
+    color: var(--ink-soft);
+  }
+
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--forest-deep);
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__plus {
+    position: relative;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .faq__plus::before,
+  .faq__plus::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--forest);
+    translate: -50% -50%;
+    transition: rotate 0.3s var(--ease);
+  }
+  .faq__plus::after {
+    rotate: 90deg;
+  }
+  details[open] .faq__plus::after {
+    rotate: 0deg;
+  }
+  .faq details p {
+    padding-bottom: 1.4rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  .note {
+    position: sticky;
+    top: 110px;
+  }
+</style>

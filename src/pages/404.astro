@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Artwork from '../components/Artwork.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Base title="Page not found">
+  <section class="page-hero">
+    <div class="container nf">
+      <div>
+        <span class="eyebrow">404</span>
+        <h1>This path has <em class="accent">wandered off</em></h1>
+        <p class="lede">The page you’re looking for may have moved when we refreshed the site. Let’s get you back on track.</p>
+        <div class="btn-row" style="margin-top:2rem">
+          <a href="/" class="btn">Back to home <Icon name="arrow" /></a>
+          <a href="/contact/" class="btn btn--ghost">Contact Shelley</a>
+        </div>
+      </div>
+      <Artwork kind="landscape" seed={404} ratio="4/5" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .nf {
+      grid-template-columns: 1.3fr 0.7fr;
+    }
+  }
+</style>
