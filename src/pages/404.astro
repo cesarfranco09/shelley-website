@@ -1,7 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import Artwork from '../components/Artwork.astro';
+import Photo from '../components/Photo.astro';
+import { acrylic } from '../data/gallery';
+
 import Icon from '../components/Icon.astro';
+
+const art = acrylic.find((a) => a.title === 'Green Pathway')!;
 ---
 
 <Base title="Page not found">
@@ -16,7 +20,7 @@ import Icon from '../components/Icon.astro';
           <a href="/contact/" class="btn btn--ghost">Contact Shelley</a>
         </div>
       </div>
-      <Artwork kind="landscape" seed={404} ratio="4/5" />
+      <Photo photo={art} ratio="4/5" alt="Green Pathway, acrylic painting by Shelley" />
     </div>
   </section>
 </Base>

@@ -21,8 +21,10 @@ Requires Node 22.12 or newer.
 ```
 src/
   data/site.ts          ← business name, email, phones, social links, nav
+  data/gallery.ts       ← every artwork/photo with its title and size
+  data/redirects.json   ← old page URLs → new pages
   layouts/Base.astro    ← <head>, SEO/OG tags, JSON-LD, header/footer
-  components/           ← Header, Footer, Logo, Icon, Artwork, PageHero, CtaBand
+  components/           ← Header, Footer, Logo, Icon, Photo, PageHero, CtaBand
   styles/global.css     ← design tokens (colors, type, spacing) and shared styles
   pages/                ← index, about, wellness, art, community, contact, 404
 public/                 ← favicon, og-image, robots.txt, and your images
@@ -32,18 +34,16 @@ public/                 ← favicon, og-image, robots.txt, and your images
 
 - **Contact details and social links:** edit `src/data/site.ts`. Every page picks up the change.
 - **Colors and fonts:** edit the variables under `:root` in `src/styles/global.css`.
-- **Adding real artwork and photos:** the gallery currently shows painterly placeholders that are generated in code (`src/components/Artwork.astro`). To use a real photo:
-  1. Put the image in `public/images/art/`, for example `public/images/art/malibu-morning.jpg`.
-  2. In `src/pages/art.astro`, add `src` to the matching entry in `works`:
-     ```ts
-     { title: 'Malibu Morning', medium: 'Acrylic', kind: 'ocean', seed: 3, ratio: '4/5', src: '/images/art/malibu-morning.jpg' },
-     ```
-  3. Any `<Artwork>` on any page accepts `src` and `alt` the same way (the portrait on the home page, the handmade cards, the puzzles, and so on).
+- **Artwork and photos:** all images come from the original site and live in `public/images/` (resized for the web). Titles, sizes and captions are in `src/data/gallery.ts`, grouped by medium (acrylic, watercolor, mosaic, digital, embroidery, masks, puzzles, floral, people, products). To add a piece, drop the image into the matching folder and add an entry:
+  ```ts
+  { src: '/images/art/acrylic/new-painting.jpg', title: 'New Painting', detail: '18 × 24', width: 1200, height: 900 },
+  ```
+  `width` and `height` are the image's pixel size; they keep the layout from jumping while images load.
 - **Contact form:** the form opens the visitor's email app with the message filled in, so no server is needed. To collect messages on a server instead, point the form at a service such as Formspree or Netlify Forms (see `src/pages/contact.astro`).
 
 ## Old URLs
 
-The previous site's page URLs (such as `/puzzles-by-shelley` or `/essential-oils-pure-unadulterated-from-nature`) redirect to their new sections, so existing links and search results keep working. The mapping is in `astro.config.mjs`.
+All 108 page URLs from the previous site (such as `/puzzles-by-shelley` or `/essential-oils-pure-unadulterated-from-nature`) redirect to their new sections, so existing links and search results keep working. The mapping is in `src/data/redirects.json`.
 
 ## Deploying
 

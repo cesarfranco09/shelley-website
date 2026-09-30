@@ -1,55 +1,75 @@
 ---
 import Base from '../layouts/Base.astro';
-import Artwork from '../components/Artwork.astro';
+import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
+import { acrylic, mosaic, watercolor, digital, people } from '../data/gallery';
+
+const find = (list: typeof acrylic, title: string) => list.find((p) => p.title === title)!;
+
+const hero = {
+  a: find(acrylic, 'Sailboats in Malibu'),
+  b: find(acrylic, 'Bromeliad World'),
+  c: find(mosaic, 'Stepping Stone — My Hand'),
+};
 
 const pillars = [
+  {
+    icon: 'ribbon',
+    tone: 'icon-badge--clay',
+    title: 'Cancer prevention education',
+    text: 'Health awareness seminars educating the public on avoidable risks of cancer and illness from environmental toxins.',
+    href: '/wellness/#cancer-prevention',
+  },
   {
     icon: 'shield',
     tone: '',
     title: 'Safe products for body & home',
-    text: 'Clean, non-toxic personal care, beauty and household essentials — and the know-how to spot harmful ingredients hiding on the label.',
-    href: '/wellness/#products',
-  },
-  {
-    icon: 'leaf',
-    tone: 'icon-badge--clay',
-    title: 'Nutrition & essential oils',
-    text: 'Thoughtfully chosen nutritional products and pure, unadulterated essential oils that have been part of Shelley’s own wellness routine for 25 years.',
+    text: 'Safe, trusted, non-toxic personal care, anti-aging, beauty and home cleaning products — and help reading every label.',
     href: '/wellness/#products',
   },
   {
     icon: 'palette',
     tone: 'icon-badge--gold',
-    title: 'Art that heals',
-    text: 'Impressionist oceanscapes, flowerscapes and mosaics, plus handmade gemstone jewelry, embroidery and puzzles — made to bring calm and joy.',
+    title: 'Fine impressionist art',
+    text: 'Acrylics, watercolors, mosaics and digital art, plus healing gemstone jewelry, embroidery, masks and puzzles.',
     href: '/art/',
+  },
+  {
+    icon: 'plant',
+    tone: 'icon-badge--sky',
+    title: 'Interior flowers & plantscapes',
+    text: 'Since 1974, Creative Environments has brought clean air, beauty, peace and tranquility indoors with plants, trees and flowers.',
+    href: '/community/#plantscapes',
   },
 ] as const;
 
 const stats = [
-  { value: '1974', label: 'Launched her first business in Los Angeles' },
-  { value: '1983', label: 'First art exhibition — Santa Monica to NYC since' },
-  { value: '25+', label: 'Years sharing pure essential oils' },
-  { value: 'LA', label: 'Local director, Cancer Prevention Coalition' },
+  { value: '1974', label: 'Founded Creative Environments Flowers & Plantscapes' },
+  { value: '1983', label: 'Began exhibiting art, from Santa Monica to NYC' },
+  { value: '1987', label: 'Became LA Director of the Cancer Prevention Coalition' },
+  { value: 'TV', label: 'Featured on NBC News and the BBC’s Sky 1' },
 ];
 
 const tips = [
-  { title: 'Read the whole label', text: 'Front-of-pack claims like “natural” or “pure” aren’t regulated. The ingredient list tells the real story.' },
-  { title: 'Question “fragrance”', text: 'A single word can stand in for dozens of undisclosed chemicals. Look for products that list what’s inside.' },
-  { title: 'Start with daily-use items', text: 'Lotions, soaps and cleaners you use every day add up. Swapping those first makes the biggest difference.' },
+  { title: 'What’s really in it?', text: 'Before you buy, ask: what ingredients are in this product, and what do they mean? The most costly products are not always the best ones.' },
+  { title: 'Look past the packaging', text: 'Some companies spend millions on advertising. Often a shampoo costs more simply because of its fancy container — the cap can cost more than what’s inside.' },
+  { title: 'Take a little more time', text: 'Ask yourself: can I buy something better if I take more time to look and think about it? Informed choices protect your whole family.' },
 ];
 
-const gallery = [
-  { kind: 'ocean', seed: 3, title: 'Malibu Morning', medium: 'Acrylic' },
-  { kind: 'garden', seed: 7, title: 'Flowerscape', medium: 'Watercolor' },
-  { kind: 'window', seed: 2, title: 'Windowscape', medium: 'Acrylic' },
-  { kind: 'mosaic', seed: 4, title: 'Sun Mosaic', medium: 'Mosaic' },
-  { kind: 'sunset', seed: 5, title: 'Evening Tide', medium: 'Digital' },
-] as const;
+const railPicks = [
+  find(acrylic, 'Sitting on the Beach'),
+  find(watercolor, 'The Malibu Pier'),
+  find(acrylic, 'Hawaiian Houses'),
+  find(mosaic, 'Front Door Tulips'),
+  find(digital, 'Round the Bend in Malibu'),
+  find(acrylic, 'Blue Chair in Garden'),
+  find(digital, 'Water Lilies at Monet’s House'),
+];
+const mediumOf = (p: (typeof acrylic)[number]) =>
+  acrylic.includes(p) ? 'Acrylic' : watercolor.includes(p) ? 'Watercolor' : mosaic.includes(p) ? 'Mosaic' : 'Digital';
 
-const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pure essential oils', 'Impressionist art', 'Handmade gifts', 'Cancer prevention education', 'Malibu community'];
+const marquee = ['Your right to know', 'Safe, non-toxic products', 'Cancer prevention education', 'Pure essential oils', 'Impressionist art', 'Healing gemstone jewelry', 'Interior plantscapes', 'Malibu, California'];
 ---
 
 <Base>
@@ -60,31 +80,27 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
       <div class="hero__copy">
         <span class="eyebrow reveal">Health · Wellness · Art</span>
         <h1 class="reveal" style="--delay:.08s">
-          Healthier choices for <em class="accent">body, home</em> &amp; spirit.
+          Your right to know what’s in <em class="accent">everyday</em> products.
         </h1>
         <p class="lede reveal" style="--delay:.16s">
-          Shelley Marks-Kramer helps people understand what’s really in the products they use every day — and
-          discover safe, beautiful alternatives. Friendly guidance, trusted products and art made to heal.
+          After losing her mom to cancer and surviving skin cancer herself, Shelley Marks-Kramer has spent decades helping
+          people read labels, avoid harmful ingredients, and choose safe, trusted products for body and home.
         </p>
         <div class="btn-row reveal" style="--delay:.24s">
           <a href="/wellness/" class="btn">Explore wellness <Icon name="arrow" /></a>
-          <a href="/art/" class="btn btn--ghost">View the art</a>
+          <a href="/art/" class="btn btn--ghost">View Shelley’s art</a>
         </div>
         <div class="hero__trust reveal" style="--delay:.32s">
-          <div class="hero__avatars" aria-hidden="true">
-            <span><Icon name="leaf" size={16} /></span>
-            <span><Icon name="heart" size={16} /></span>
-            <span><Icon name="sparkles" size={16} /></span>
-          </div>
-          <p><strong>Cancer survivor, educator &amp; artist</strong><br />on a mission to make everyday living safer.</p>
+          <img class="hero__face" src={people.portrait.src} alt="" width="52" height="52" />
+          <p><strong>Shelley Marks-Kramer</strong><br />LA Director, Cancer Prevention Coalition · Artist</p>
         </div>
       </div>
 
-      <div class="hero__art" aria-hidden="true">
-        <div class="hero__frame hero__frame--a"><Artwork kind="ocean" seed={11} ratio="3/4" eager /></div>
-        <div class="hero__frame hero__frame--b"><Artwork kind="garden" seed={4} ratio="1/1" eager /></div>
-        <div class="hero__frame hero__frame--c"><Artwork kind="mosaic" seed={2} ratio="1/1" eager /></div>
-        <div class="hero__badge">
+      <div class="hero__art">
+        <div class="hero__frame hero__frame--a"><Photo photo={hero.a} ratio="3/4" eager alt={`${hero.a.title}, acrylic painting by Shelley`} /></div>
+        <div class="hero__frame hero__frame--b"><Photo photo={hero.b} ratio="1/1" eager alt={`${hero.b.title}, acrylic painting by Shelley`} /></div>
+        <div class="hero__frame hero__frame--c"><Photo photo={hero.c} ratio="1/1" eager alt="Mosaic stepping stone of Shelley’s hand" /></div>
+        <div class="hero__badge" aria-hidden="true">
           <span class="hero__badge-num">1974</span>
           <span>creating healthy,<br />beautiful spaces</span>
         </div>
@@ -103,11 +119,11 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
   <section class="section">
     <div class="container">
       <div class="section-head section-head--center reveal">
-        <span class="eyebrow">How I can help</span>
-        <h2>Three paths to a <em class="accent">healthier</em> life</h2>
-        <p class="lede">Simple, honest guidance — never pressure. Start wherever feels right for you.</p>
+        <span class="eyebrow">Here’s how I can help you</span>
+        <h2>Treat yourself with <em class="accent">love</em> and affection</h2>
+        <p class="lede">Learn how to live a healthy life with safe, pure and trusted products for body and home.</p>
       </div>
-      <div class="grid grid-3">
+      <div class="grid grid-4">
         {
           pillars.map((p, i) => (
             <a href={p.href} class="card card--hover pillar reveal" style={`--delay:${i * 0.08}s`}>
@@ -131,30 +147,26 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     <div class="container split">
       <div class="story__media reveal">
         <div class="portrait">
-          <Artwork kind="garden" seed={21} ratio="4/5" />
-          <div class="portrait__caption">
-            <span class="portrait__name">Shelley Marks-Kramer</span>
-            <span>Educator · Beauty consultant · Artist</span>
-          </div>
+          <Photo photo={people.portrait} ratio="4/5" alt="Portrait of Shelley Marks-Kramer" />
         </div>
         <div class="story__quote">
           <Icon name="quote" size={22} />
-          <p>My second-half-of-life mission is helping people understand what’s really in the products they use every day.</p>
+          <p>I have made it my second half of life’s mission to educate the public on the risks of toxic ingredients in their daily used products.</p>
         </div>
       </div>
       <div class="story__copy">
         <span class="eyebrow reveal">Meet Shelley</span>
-        <h2 class="reveal">A lifetime of creating <em class="accent">healthier</em> spaces</h2>
+        <h2 class="reveal">A cancer survivor with a <em class="accent">mission</em></h2>
         <div class="prose reveal">
           <p>
-            Shelley has been happily self-employed for more than three-quarters of her life. In 1974 she founded
-            Creative Environments Flowers &amp; Plantscapes, filling homes, offices, restaurants and celebrations with
-            living, breathing beauty.
+            Shelley has been successfully self-employed, starting and running several of her own businesses, for more
+            than three-quarters of her life. She holds several college degrees, certifications in nutritional and beauty
+            consulting, and memberships in many health and wellness organizations.
           </p>
           <p>
-            As a cancer survivor, she turned her energy toward education — becoming director of the local Los Angeles
-            office of the Cancer Prevention Coalition, earning certification in nutritional consulting, and teaching
-            families how to choose safer products for body and home.
+            Her mom, “Miss Shirley Marks, Beauty Consultant from the House of Revlon,” died of cancer at just 56. Shelley
+            has battled skin cancers since her teens. Together those experiences started her research into why there is
+            so much cancer — and her commitment to telling the public what they deserve the right to know.
           </p>
         </div>
         <dl class="stats reveal">
@@ -172,16 +184,31 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     </div>
   </section>
 
+  <!-- TESTIMONIAL -->
+  <section class="section section--tight">
+    <div class="container">
+      <figure class="testimonial reveal">
+        <Icon name="quote" size={40} />
+        <blockquote>
+          Shelley is a vibrant, high energy, free spirit with a zest for life that is contagious. Her passion is to
+          instill the joy of living a healthy life into those she meets and to awaken within people their full potential
+          to help others share the benefits of living a healthy life.
+        </blockquote>
+        <figcaption><strong>Dr. Lauren Swerdloff, M.D.</strong> · Santa Monica</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- INGREDIENT AWARENESS -->
-  <section class="section">
+  <section class="section section--paper">
     <div class="container split split--wide-left">
       <div>
         <div class="section-head reveal">
-          <span class="eyebrow">Be a savvy consumer</span>
-          <h2>Know what’s in your <em class="accent">everyday</em> products</h2>
+          <span class="eyebrow">Your decisions as health product consumers</span>
+          <h2>“Which one should <em class="accent">I choose?</em>”</h2>
           <p class="lede">
-            Small, simple swaps can reduce your exposure to questionable ingredients. Here’s where Shelley suggests
-            starting.
+            You probably ask yourself that question practically every day. The choices you make are important,
+            especially when they concern your health.
           </p>
         </div>
         <ol class="tips">
@@ -197,22 +224,22 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
             ))
           }
         </ol>
-        <a href="/wellness/#consumer-guide" class="link-arrow mt-lg reveal">See the full consumer guide <Icon name="arrow" size={16} /></a>
+        <a href="/wellness/#consumer-guide" class="link-arrow mt-lg reveal">Become a wise health consumer <Icon name="arrow" size={16} /></a>
       </div>
       <div class="label-card reveal" aria-hidden="true">
         <div class="label-card__head">
           <Icon name="search" size={18} />
-          <span>Ingredient check</span>
+          <span>Reading a label with Shelley</span>
         </div>
         <ul>
+          <li class="ok"><span>Zinc oxide (non-nano)</span><em>Mineral</em></li>
           <li class="ok"><span>Aloe barbadensis leaf juice</span><em>Plant-based</em></li>
-          <li class="ok"><span>Cocos nucifera (coconut) oil</span><em>Plant-based</em></li>
-          <li class="warn"><span>Fragrance / parfum</span><em>Undisclosed</em></li>
-          <li class="ok"><span>Tocopherol (vitamin E)</span><em>Nourishing</em></li>
-          <li class="warn"><span>Synthetic dyes</span><em>Look closer</em></li>
+          <li class="warn"><span>Parabens</span><em>Controversial</em></li>
+          <li class="warn"><span>Sodium lauryl sulfate</span><em>Questionable</em></li>
+          <li class="warn"><span>Formaldehyde releasers</span><em>Avoid</em></li>
         </ul>
         <div class="label-card__foot">
-          <span class="pill"><Icon name="shield" size={14} /> Learn to read labels with confidence</span>
+          <span class="pill"><Icon name="shield" size={14} /> “I am happy to help you read labels.”</span>
         </div>
       </div>
     </div>
@@ -223,11 +250,11 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     <div class="container">
       <div class="art-show__head">
         <div class="section-head reveal">
-          <span class="eyebrow" style="color:#f3b79f">From the studio</span>
-          <h2>Art made to <em class="accent" style="color:#f3b79f">bring calm</em></h2>
+          <span class="eyebrow" style="color:#f3b79f">Fine impressionist art</span>
+          <h2>Oceanscapes, landscapes &amp; <em class="accent" style="color:#f3b79f">windowscapes</em></h2>
           <p class="lede" style="color:rgb(231 239 230 / .8)">
-            Oceanscapes, landscapes, windowscapes and flowerscapes in acrylic, watercolor, mosaic and digital media —
-            exhibited from Santa Monica to New York City and collected across the U.S.
+            Shelley has shown her artwork since 1983 across the United States, from Santa Monica to New York City, and
+            has collectors across the U.S. All artwork is for sale — ask about pricing.
           </p>
         </div>
         <a href="/art/" class="btn btn--light reveal">Visit the gallery <Icon name="arrow" /></a>
@@ -235,12 +262,12 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     </div>
     <div class="art-rail" tabindex="0" aria-label="Featured artwork">
       {
-        gallery.map((g, i) => (
+        railPicks.map((g, i) => (
           <a href="/art/" class={`art-rail__item reveal ${i % 2 ? 'is-offset' : ''}`} style={`--delay:${i * 0.06}s`}>
-            <Artwork kind={g.kind} seed={g.seed} ratio="4/5" />
+            <Photo photo={g} ratio="4/5" />
             <span class="art-rail__meta">
               <strong>{g.title}</strong>
-              <span>{g.medium}</span>
+              <span>{mediumOf(g)}</span>
             </span>
           </a>
         ))
@@ -250,6 +277,7 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
 
   <CtaBand />
 </Base>
+
 
 <style>
   /* Hero */
@@ -296,30 +324,14 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
   .hero__trust strong {
     color: var(--forest-deep);
   }
-  .hero__avatars {
-    display: flex;
-  }
-  .hero__avatars span {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
+  .hero__face {
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    border: 3px solid var(--cream);
-    background: var(--sage-soft);
-    color: var(--forest);
-    margin-left: -10px;
-  }
-  .hero__avatars span:first-child {
-    margin-left: 0;
-  }
-  .hero__avatars span:nth-child(2) {
-    background: var(--clay-soft);
-    color: var(--clay-deep);
-  }
-  .hero__avatars span:nth-child(3) {
-    background: #f6e8c7;
-    color: #8a6415;
+    object-fit: cover;
+    object-position: top;
+    border: 3px solid #fff;
+    box-shadow: var(--shadow-sm);
   }
 
   .hero__art {
@@ -337,7 +349,7 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     box-shadow: var(--shadow-lg);
     animation: float 9s ease-in-out infinite;
   }
-  .hero__frame :global(.artwork) {
+  .hero__frame :global(.photo) {
     border-radius: calc(var(--radius-lg) - 8px);
   }
   .hero__frame--a {
@@ -444,8 +456,32 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
     overflow: hidden;
     box-shadow: var(--shadow);
   }
-  .portrait :global(.artwork) {
+  .portrait :global(.photo) {
     border-radius: 0;
+  }
+  .testimonial {
+    max-width: 900px;
+    margin-inline: auto;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+  }
+  .testimonial :global(svg) {
+    color: var(--clay);
+  }
+  .testimonial blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+    line-height: 1.35;
+    color: var(--forest-deep);
+    text-wrap: balance;
+  }
+  .testimonial figcaption {
+    color: var(--ink-mute);
+  }
+  .testimonial figcaption strong {
+    color: var(--forest-deep);
   }
   .portrait__caption {
     position: absolute;
@@ -623,10 +659,10 @@ const marquee = ['Non-toxic living', 'Clean beauty', 'Whole-body nutrition', 'Pu
   .art-rail__item.is-offset {
     margin-top: 2.5rem;
   }
-  .art-rail__item :global(.artwork) {
+  .art-rail__item :global(.photo) {
     transition: transform 0.6s var(--ease);
   }
-  .art-rail__item:hover :global(.artwork) {
+  .art-rail__item:hover :global(.photo) {
     transform: scale(1.03) rotate(-0.6deg);
   }
   .art-rail__meta {

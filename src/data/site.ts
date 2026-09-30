@@ -5,7 +5,7 @@ export const site = {
   owner: 'Shelley Marks-Kramer',
   tagline: 'Wellness, safe products & art that heals',
   description:
-    'Healthy Communications by Shelley Marks-Kramer — guidance on safe, non-toxic personal care and home products, nutrition, pure essential oils, and impressionist art from Malibu, California.',
+    'Healthy Communications by Shelley Marks-Kramer — Los Angeles director of the Cancer Prevention Coalition, educator on safe, non-toxic products for body and home, and impressionist artist in Malibu, California.',
   url: 'https://healthy-communications.com',
   email: 'shelley@healthy-communications.com',
   phones: [
@@ -16,7 +16,12 @@ export const site = {
   social: {
     instagram: 'https://www.instagram.com/healthycom4u/',
     linkedin: 'https://www.linkedin.com/in/shelleymarkskramer/',
+    youtube: 'https://www.youtube.com/@Healthycom',
     artSite: 'https://shelley-marks-kramer.com/',
+  },
+  shops: {
+    pureHaven: 'https://purehaven.com/',
+    timeLabs: 'https://timelabs.com/',
   },
 };
 

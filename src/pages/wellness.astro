@@ -1,77 +1,77 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { mailto } from '../data/site';
+import { mailto, site } from '../data/site';
+import { products } from '../data/gallery';
 
 const services = [
-  { icon: 'users', title: 'One-on-one guidance', text: 'A friendly conversation about your routine, your concerns and your goals — and a simple plan to make safer swaps.' },
-  { icon: 'search', title: 'Product & label reviews', text: 'Not sure about something in your bathroom cabinet or under the sink? Shelley will help you decode the ingredient list.' },
-  { icon: 'leaf', title: 'Nutritional consulting', text: 'Certified guidance on clean, high-quality nutritional products that support whole-body wellness.' },
-  { icon: 'home', title: 'A healthier home', text: 'From laundry to surface cleaners to air fresheners, learn where hidden chemicals live and what to use instead.' },
+  { icon: 'users', title: 'Health awareness seminars', text: 'Presentations educating the public on avoidable risks of cancer and illness from chemicals in everyday products.' },
+  { icon: 'search', title: 'Label reading help', text: '“I am happy to help you read labels and understand the chemicals you might be using.”' },
+  { icon: 'leaf', title: 'Nutritional & beauty consulting', text: 'Certified guidance on clean nutritionals and safety-conscious skin, body, hair and beauty care.' },
+  { icon: 'home', title: 'A non-toxic home', text: 'Safe household cleaning products and alternatives for your whole family — babies, men, women and pets.' },
 ] as const;
 
-const products = [
-  {
-    icon: 'leaf',
-    tone: '',
-    tag: 'Nutrition',
-    title: 'Clean nutritional products',
-    text: 'Shelley recommends Modere, a company that has been manufacturing clean and safe consumer products for more than 30 years — from nutritional supplements to personal care.',
-    points: ['Transparent ingredients', 'Decades-long manufacturing record', 'Supports daily wellness'],
-    subject: 'Question about nutritional products',
-  },
-  {
-    icon: 'sparkles',
-    tone: 'icon-badge--clay',
-    tag: 'Beauty & home',
-    title: 'Safe beauty & household care',
-    text: 'For safety-conscious cosmetics, skin care and home care, Shelley works with Pure Haven — products formulated without the ingredients she teaches people to avoid.',
-    points: ['Clean beauty cosmetics', 'Body, bath & skin care', 'Non-toxic home cleaning'],
-    subject: 'Question about safe beauty & home products',
-  },
-  {
-    icon: 'droplet',
-    tone: 'icon-badge--gold',
-    tag: 'Essential oils',
-    title: 'Pure, unadulterated essential oils',
-    text: 'Organic essential oils from Time Labs, a private-label company with more than 30 years in business. These oils have been part of Shelley’s own health collection for 25 years.',
-    points: ['Pure & unadulterated', 'Organic options', 'Trusted for 25+ years'],
-    subject: 'Question about essential oils',
-  },
-] as const;
+const pureHaven = [
+  'Certified USDA organic options',
+  'Skin, body & hair care',
+  'Anti-aging & beauty cosmetics',
+  'Household cleaning',
+  'Products for babies, men, women & pets',
+  'No harmful, questionable or known carcinogenic chemicals',
+];
 
-const guide = [
-  { title: 'Read the full ingredient list', text: 'Words like “natural,” “pure” or “green” on the front of a package aren’t regulated. Turn it over — the ingredient list is where the truth lives.' },
-  { title: 'Be cautious with “fragrance”', text: '“Fragrance” or “parfum” can represent a blend of many undisclosed ingredients. Favor brands that tell you exactly what’s inside.' },
-  { title: 'Start with what stays on your skin', text: 'Lotions, deodorants, makeup and sunscreen remain on your body for hours. These are smart first swaps.' },
-  { title: 'Look beyond the bathroom', text: 'Dish soap, laundry detergent, surface sprays and air fresheners all affect the air you breathe at home.' },
-  { title: 'Protect the little ones', text: 'Babies and children are more vulnerable to exposures. Choose gentle, simple formulas for their care products.' },
-  { title: 'Swap gradually — no guilt', text: 'You don’t need to throw everything out today. Replace items as they run out, and build a cleaner routine over time.' },
+const watchlist = [
+  { name: 'Parabens', note: 'Preservatives found in many lotions, cosmetics and shampoos' },
+  { name: 'Formaldehyde & releasers', note: 'Used in some nail, hair and skin care products' },
+  { name: 'Sodium lauryl sulfate', note: 'A foaming agent in shampoos, soaps and toothpastes' },
+  { name: 'Cocamide DEA', note: 'A foaming and thickening agent in soaps and shampoos' },
+  { name: 'Mineral oil & petrolatum', note: 'Petroleum-derived moisturizers and bases' },
+  { name: 'Propylene glycol', note: 'A common humectant and solvent' },
+  { name: 'Benzophenone', note: 'A UV filter used in sunscreens and cosmetics' },
+  { name: '“Fragrance”', note: 'One word that can hide many undisclosed ingredients' },
+];
+
+const books = [
+  { title: 'The Safe Shopper’s Bible', by: 'Samuel S. Epstein, M.D. & David Steinman, 1995' },
+  { title: 'Toxic Beauty', by: 'Samuel S. Epstein, M.D. with Randall Fitzgerald, 2009' },
+  { title: 'Unreasonable Risk: How to Avoid Cancer from Cosmetics and Personal Care Products', by: 'Samuel S. Epstein, M.D., 2001' },
+  { title: 'The Politics of Cancer Revisited', by: 'Samuel S. Epstein, M.D., 1998' },
+  { title: 'Cancer-Gate: How to Win the Losing Cancer War', by: 'Samuel S. Epstein, M.D., 2005' },
+  { title: 'Not Just a Pretty Face', by: 'Stacy Malkan' },
+  { title: 'Beauty to Die For', by: 'Judi Vance' },
+  { title: 'Nontoxic Homes', by: 'Debra Lynn Dadd' },
+];
+
+const orgs = [
+  { name: 'Campaign for Safe Cosmetics', href: 'https://www.safecosmetics.org/' },
+  { name: 'Environmental Working Group', href: 'https://www.ewg.org/' },
+  { name: 'Silent Spring Institute', href: 'https://www.silentspring.org/' },
 ];
 
 const faqs = [
-  { q: 'Do I need to replace everything at once?', a: 'Not at all. Shelley recommends replacing products as they run out, starting with the ones you use most often. Small steps add up.' },
-  { q: 'Can you help me choose products for my whole family?', a: 'Yes. Share who you’re shopping for — kids, partners, sensitive skin, special diets — and Shelley will suggest options that fit.' },
+  { q: 'Can I get a discount on essential oils?', a: 'Yes. Browse the Time Labs website, then contact Shelley with what you’d like. Orders placed through her receive a 15–25% discount.' },
+  { q: 'Do you give presentations to groups?', a: 'Yes. Shelley provides health awareness seminars on chemicals in everyday products and how to choose safer alternatives. Get in touch to arrange one.' },
+  { q: 'Can you help me choose products for my family?', a: 'Absolutely. Tell Shelley who you’re shopping for — babies, sensitive skin, men, women, even pets — and she’ll help you find safe options.' },
   { q: 'Is this medical advice?', a: 'No. Shelley provides education and product guidance. For any medical condition, please work with your physician or a qualified health professional.' },
-  { q: 'How do I get started?', a: 'Send a message or call. Tell Shelley a little about your routine and what you’d like to change, and she’ll take it from there.' },
 ];
 ---
 
-<Base title="Wellness & Safe Products" description="Guidance on safe, non-toxic personal care, beauty and household products, clean nutrition and pure essential oils — plus a consumer guide to reading labels, from Shelley Marks-Kramer.">
+<Base title="Wellness & Safe Products" description="Safe, pure and trusted products for body and home — Pure Haven clean beauty, pure essential oils from Time Labs, mineral sunscreen guidance, cancer prevention education and a consumer guide to reading labels, from Shelley Marks-Kramer.">
   <PageHero
-    eyebrow="Health & wellness"
-    title='Safer products. <em class="accent">Simpler</em> choices.'
-    lede="Every day we put dozens of products on our skin and into our homes. Shelley helps you understand what’s in them — and find trusted, non-toxic alternatives that really work."
+    eyebrow="Treat yourself with love & affection"
+    title='Safe, pure &amp; <em class="accent">trusted</em> products for body and home'
+    lede="I advocate for the use of natural remedies for your body and home, together with clean water, clean air and non-toxic products."
   >
     <div slot="actions" class="btn-row reveal" style="--delay:.24s; margin-top: 2rem">
-      <a href="#products" class="btn">Browse product families <Icon name="arrow" /></a>
+      <a href="#products" class="btn">See the products <Icon name="arrow" /></a>
       <a href="#consumer-guide" class="btn btn--ghost">Consumer guide</a>
     </div>
     <div class="hero-stat reveal" style="--delay:.3s">
-      <div class="hero-stat__ring"><Icon name="shield" size={34} /></div>
-      <p><strong>Education, not pressure.</strong> Learn to read labels and make confident decisions for your family.</p>
+      <img src={products['green-business'].src} alt="Certified Green Business League" width="88" height="88" />
+      <p><strong>Safety-conscious, certified green.</strong> Safe, effective, affordable — and non-toxic, with no harmful, questionable or known carcinogenic chemicals.</p>
     </div>
   </PageHero>
 
@@ -80,7 +80,7 @@ const faqs = [
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">How I can help you</span>
-        <h2>Personal guidance for your health product decisions</h2>
+        <h2>With your decisions on health product choices</h2>
       </div>
       <div class="grid grid-4">
         {
@@ -100,52 +100,141 @@ const faqs = [
   <section class="section section--paper" id="products">
     <div class="container">
       <div class="section-head section-head--center reveal">
-        <span class="eyebrow">Trusted product families</span>
-        <h2>Clean choices from companies with <em class="accent">decades</em> of trust</h2>
-        <p class="lede">Shelley only recommends products she uses herself, from established manufacturers with long track records.</p>
+        <span class="eyebrow">Safety-conscious companies</span>
+        <h2>Two favorite product lines, <em class="accent">clean &amp; safe</em></h2>
+        <p class="lede">Products Shelley uses herself and recommends to her family, friends and clients.</p>
       </div>
-      <div class="grid grid-3">
-        {
-          products.map((p, i) => (
-            <article class="card product reveal" style={`--delay:${i * 0.08}s`}>
-              <div class="product__top">
-                <span class={`icon-badge ${p.tone}`}><Icon name={p.icon} /></span>
-                <span class="pill">{p.tag}</span>
-              </div>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-              <ul class="check-list">
-                {p.points.map((pt) => <li>{pt}</li>)}
-              </ul>
-              <a href={mailto(p.subject)} class="link-arrow">
-                Ask Shelley <Icon name="arrow" size={16} />
-              </a>
-            </article>
-          ))
-        }
+
+      <article class="feature card reveal">
+        <div class="feature__media">
+          <Photo photo={products['bottles']} alt="Pure Haven personal care products" />
+        </div>
+        <div class="feature__body">
+          <div class="feature__brand">
+            <img src={products['pure-haven-logo'].src} alt="Pure Haven Essentials" width="72" height="72" />
+            <span class="pill">Beauty, body &amp; home</span>
+          </div>
+          <h3>Pure Haven</h3>
+          <p>
+            Safe, trusted, pure, organic, non-toxic personal care, anti-aging, beauty and home cleaning products. Pure
+            Haven has made the “best company” list of safest products, and its sunscreen has been among the best rated by
+            EWG. Shelley has been using Pure Haven for over eight years.
+          </p>
+          <ul class="check-list cols">
+            {pureHaven.map((p) => <li>{p}</li>)}
+          </ul>
+          <div class="btn-row">
+            <a href={mailto('Pure Haven order')} class="btn btn--clay">Order through Shelley <Icon name="arrow" /></a>
+            <a href={site.shops.pureHaven} class="btn btn--ghost" target="_blank" rel="noopener">Browse Pure Haven <Icon name="external" /></a>
+          </div>
+        </div>
+      </article>
+
+      <div class="grid grid-2 mt-lg">
+        <article class="card product reveal">
+          <Photo photo={products['essential-oils']} ratio="16/9" alt="Bottles of pure essential oils" />
+          <div class="product__top">
+            <span class="pill">Essential oils</span>
+            <span class="pill pill--clay">15–25% off through Shelley</span>
+          </div>
+          <h3>Pure, unadulterated essential oils from Time Labs</h3>
+          <p>
+            Time Labs is a private-label manufacturer of some of the world’s best essential oils, in business for more than
+            30 years. Essential oils have been part of Shelley’s health collection for over 25 years — she knows the owner,
+            and orders placed through her receive a 15–25% discount.
+          </p>
+          <div class="btn-row">
+            <a href={mailto('Essential oils order (Time Labs)')} class="btn">Order with discount <Icon name="arrow" /></a>
+            <a href={site.shops.timeLabs} class="btn btn--ghost" target="_blank" rel="noopener">Browse Time Labs <Icon name="external" /></a>
+          </div>
+        </article>
+
+        <article class="card product reveal" style="--delay:.08s">
+          <Photo photo={products['cbd-oil']} ratio="16/9" alt="Pure Haven CBD comfort oil roller bottle" />
+          <div class="product__top">
+            <span class="pill">Shelley’s favorite</span>
+          </div>
+          <h3>CBD comfort oil</h3>
+          <blockquote class="product__quote">
+            “This is an amazing product. I used it on my dry skin and rash and the next day started seeing healing results.
+            Within a few days the rash was almost gone.”
+          </blockquote>
+          <p>
+            Nourishing CBD (0% THC) with organic sunflower, jojoba, frankincense, roman chamomile and lavender oils, in a
+            convenient roller ball to moisturize and comfort dry skin and relieve achy muscles.
+          </p>
+          <a href={mailto('CBD comfort oil')} class="link-arrow">Ask Shelley <Icon name="arrow" size={16} /></a>
+        </article>
+      </div>
+
+      <p class="center muted mt-lg">
+        Shelley has also used Modere’s clean nutritionals for many years —
+        <a href={mailto('Nutritional products')} class="link-arrow">ask her about nutrition</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Sunscreen -->
+  <section class="section" id="sunscreen">
+    <div class="container split">
+      <div>
+        <span class="eyebrow reveal">Skip the uncertainty, not the sunscreen</span>
+        <h2 class="reveal" style="margin-block:1rem 1.25rem">Choosing a <em class="accent">safer</em> sunscreen</h2>
+        <div class="prose reveal">
+          <p>
+            About 5 million cases of skin cancer are diagnosed each year, more than 90% attributed to UV exposure — so
+            sunscreen matters. But the FDA has asked for more safety information on common chemical UV filters such as
+            oxybenzone, avobenzone, homosalate, octinoxate, octisalate and octocrylene.
+          </p>
+          <p>
+            Pure Haven’s sunscreen uses <strong>non-nanoparticle titanium dioxide (6%) and zinc oxide (6%)</strong> —
+            minerals that sit on the surface of the skin and deflect UV rays rather than absorbing them.
+          </p>
+        </div>
+      </div>
+      <div class="card sun reveal" style="--delay:.1s">
+        <Photo photo={products.sunscreen} ratio="3/1" alt="Pure Haven mineral sunscreen tubes on sand" />
+        <h3>Tips for sunscreen use</h3>
+        <ul class="check-list">
+          <li>Use a shot glass full (about 1 oz) of lotion for your entire body.</li>
+          <li>Seek shade between 10 a.m. and 2 p.m., when the sun’s rays are strongest.</li>
+          <li>Wear sun-protective clothing.</li>
+          <li>Choose lotions or sticks over sprays, which may be unsafe to inhale and make it easy to miss spots.</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <!-- Cancer prevention -->
   <section class="section section--forest" id="cancer-prevention">
-    <div class="container split">
+    <div class="container split" style="align-items:start">
       <div class="reveal">
-        <span class="eyebrow" style="color:#f3b79f">Cancer: a focus on prevention</span>
-        <h2 style="margin-top:1rem">Awareness is the first step toward prevention</h2>
+        <span class="eyebrow" style="color:#f3b79f">Cancer prevention education</span>
+        <h2 style="margin-top:1rem">The more cancer is prevented, the less there is to treat</h2>
+        <p class="lede" style="color:rgb(231 239 230 / .8); margin-top:1.25rem">
+          Shelley has served as Los Angeles director of the Cancer Prevention Coalition since 1987.
+        </p>
       </div>
       <div class="prose prose--light reveal" style="--delay:.1s">
         <p>
-          Shelley serves as director of the local Los Angeles office of the Cancer Prevention Coalition, founded by the
-          late Dr. Samuel S. Epstein, M.D., a pioneering voice on avoidable environmental and consumer-product causes
-          of cancer.
+          The Cancer Prevention Coalition was founded by Dr. Samuel S. Epstein, M.D., professor emeritus of environmental
+          and occupational medicine at the University of Illinois at Chicago School of Public Health. An internationally
+          recognized expert on avoidable causes of cancer, he published hundreds of peer-reviewed articles and authored or
+          co-authored books including <em>The Politics of Cancer</em>, <em>The Safe Shopper’s Bible</em> and
+          <em>Toxic Beauty</em>.
         </p>
         <p>
-          As a survivor herself, she shares information about reducing exposure to potentially harmful ingredients in
-          everyday products — so you and your loved ones can make informed choices.
+          “Our dear Dr. Samuel Epstein passed away in 2018, at a ripe old 91 years of age. We will remember him with
+          reverence and compassion. He was a maverick and one of a kind, and all of us who knew him personally will miss
+          him tremendously.”
         </p>
-        <a href={mailto('Cancer prevention information')} class="btn btn--light" style="margin-top:1.5rem">
-          Request information <Icon name="arrow" />
+        <p>
+          Everyday products such as shampoo, deodorant and make-up can contain chemicals of concern. Through seminars and
+          scientific literature, Shelley helps people learn which ingredients to question and which safer alternatives are
+          available.
+        </p>
+        <a href={mailto('Cancer prevention seminar or information')} class="btn btn--light" style="margin-top:1rem">
+          Request a seminar or information <Icon name="arrow" />
         </a>
       </div>
     </div>
@@ -155,20 +244,94 @@ const faqs = [
   <section class="section" id="consumer-guide">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">Your decisions as a health product consumer</span>
-        <h2>Six simple habits of a <em class="accent">savvy</em> shopper</h2>
+        <span class="eyebrow">Your decisions as health product consumers</span>
+        <h2>How to become a <em class="accent">wise</em> health consumer</h2>
+        <p class="lede">
+          “Which one should I choose?” The choices you make are important, especially when they concern your health.
+        </p>
       </div>
-      <ol class="guide">
-        {
-          guide.map((g, i) => (
-            <li class="reveal" style={`--delay:${(i % 3) * 0.07}s`}>
-              <span class="guide__num">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{g.title}</h3>
-              <p>{g.text}</p>
-            </li>
-          ))
-        }
-      </ol>
+
+      <div class="facts reveal">
+        <div>
+          <strong>1938</strong>
+          <p>The year the U.S. law governing cosmetics was written. It went largely unchanged until the Modernization of Cosmetics Regulation Act of 2022.</p>
+        </div>
+        <div>
+          <strong>125+</strong>
+          <p>Known carcinogens in daily personal hygiene and beauty products, according to General Accounting Office information Senator Ted Kennedy presented to Congress in 1997.</p>
+        </div>
+        <div>
+          <strong>800+</strong>
+          <p>Chemicals available for use in cosmetics that have been reported to the government as toxic substances, according to NIOSH.</p>
+        </div>
+      </div>
+
+      <div class="guide mt-lg">
+        <div class="reveal">
+          <h3>Ask before you buy</h3>
+          <p>
+            Many people have learned that the most costly products are not always the best ones. Ask: what ingredients
+            are in this product and what do they mean? Can I buy something better if I take more time to look and think
+            about it?
+          </p>
+        </div>
+        <div class="reveal" style="--delay:.06s">
+          <h3>Know where to look</h3>
+          <p>
+            Public health educators, cancer prevention educators, nurses, pharmacists and doctors can advise you. Material
+            Safety Data Sheets list the chemicals in everyday products and their measure of safety or hazard. News
+            reports, scientific articles and your library are good sources, too.
+          </p>
+        </div>
+        <div class="reveal" style="--delay:.12s">
+          <h3>Look past the advertising</h3>
+          <p>
+            Some ads give helpful information; many don’t. Scientific claims can be checked against the facts in writing.
+            Often a shampoo costs more simply because of its fancy container — the cap can cost more than the shampoo.
+          </p>
+        </div>
+      </div>
+
+      <div class="split mt-lg" style="align-items:start">
+        <div class="card reveal">
+          <span class="icon-badge icon-badge--clay"><Icon name="search" /></span>
+          <h3>Ingredients Shelley teaches people to look for</h3>
+          <p>These controversial and questionable ingredients come up again and again in her seminars.</p>
+          <dl class="watch">
+            {
+              watchlist.map((w) => (
+                <div>
+                  <dt>{w.name}</dt>
+                  <dd>{w.note}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+        <div class="card reveal" style="--delay:.08s">
+          <span class="icon-badge"><Icon name="book" /></span>
+          <h3>Recommended reading</h3>
+          <ul class="books">
+            {
+              books.map((b) => (
+                <li>
+                  <strong>{b.title}</strong>
+                  <span>{b.by}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="orgs">
+            Online:
+            {orgs.map((o, i) => <>{i > 0 && ' · '}<a href={o.href} target="_blank" rel="noopener">{o.name}</a></>)}
+          </p>
+        </div>
+      </div>
+
+      <p class="closing reveal">
+        Once you are an informed consumer and you learn about the chemicals and ingredients in your products, you can make
+        informed decisions and wise choices. <strong>Protecting your health and skin should be of utmost importance to you and your family.</strong>
+      </p>
     </div>
   </section>
 
@@ -196,14 +359,14 @@ const faqs = [
         <span class="icon-badge icon-badge--sky"><Icon name="book" /></span>
         <h3>A gentle reminder</h3>
         <p>
-          The information shared here is educational and is not intended to diagnose, treat, cure or prevent any
-          disease. Always talk with your physician before changing your health routine.
+          The information shared here is educational and is not intended to diagnose, treat, cure or prevent any disease.
+          Always talk with your physician before changing your health routine.
         </p>
       </aside>
     </div>
   </section>
 
-  <CtaBand title='Questions about a product or ingredient?' text="Send Shelley a photo of a label or a list of what you use. She’ll help you make sense of it — and suggest simple, safer swaps." />
+  <CtaBand title='Questions about a product or ingredient?' text="Send Shelley a photo of a label or a list of what you use. She’ll help you make sense of it — and suggest safe, trusted alternatives." />
 </Base>
 
 <style>
@@ -213,89 +376,184 @@ const faqs = [
     align-items: center;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
-    background: rgb(255 255 255 / 0.75);
+    background: rgb(255 255 255 / 0.8);
     border: 1px solid var(--line);
     backdrop-filter: blur(8px);
     box-shadow: var(--shadow);
     color: var(--ink-soft);
-    max-width: 420px;
+    max-width: 440px;
     justify-self: end;
+  }
+  .hero-stat img {
+    flex: none;
+    width: 88px;
+    height: 88px;
   }
   .hero-stat strong {
     color: var(--forest-deep);
   }
-  .hero-stat__ring {
-    flex: none;
+
+  .feature {
     display: grid;
-    place-items: center;
+    gap: 2rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 3rem;
+    }
+  }
+  .feature__media :global(.photo) {
+    border-radius: var(--radius);
+  }
+  .feature__brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .feature__brand img {
     width: 72px;
     height: 72px;
-    border-radius: 50%;
-    background: conic-gradient(var(--clay) 0 70%, var(--sage-soft) 70% 100%);
-    color: var(--forest);
-    position: relative;
+    border-radius: 16px;
   }
-  .hero-stat__ring::before {
-    content: '';
-    position: absolute;
-    inset: 6px;
-    border-radius: 50%;
-    background: var(--white);
+  .feature h3 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
   }
-  .hero-stat__ring :global(svg) {
-    position: relative;
+  .check-list.cols {
+    margin-block: 1.5rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .pill--clay {
+    background: var(--clay-soft);
+    color: var(--clay-deep);
   }
 
   .product {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.9rem;
   }
   .product__top {
     display: flex;
-    justify-content: space-between;
-    align-items: start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
   }
-  .product .check-list {
-    margin-block: 1.2rem 1.6rem;
+  .product h3 {
+    margin: 0;
+  }
+  .product > p {
     flex: 1;
+  }
+  .product__quote {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: var(--forest-deep);
+    padding-left: 1rem;
+    border-left: 3px solid var(--clay);
+  }
+
+  .sun {
+    display: grid;
+    gap: 1.25rem;
   }
 
   .prose--light p {
     color: rgb(231 239 230 / 0.85);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
-  .guide {
-    list-style: none;
-    padding: 0;
+  .facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.5rem;
   }
-  .guide li {
-    padding: 2rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    transition: background-color 0.3s;
+  .facts > div {
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: var(--paper);
   }
-  .guide li:hover {
-    background: var(--white);
-  }
-  .guide__num {
+  .facts strong {
     display: block;
     font-family: var(--font-display);
-    font-size: 2.4rem;
-    color: var(--clay);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
     line-height: 1;
-    margin-bottom: 1.2rem;
+    color: var(--clay);
+    margin-bottom: 0.75rem;
+  }
+  .facts p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  .guide {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 2rem;
   }
   .guide h3 {
     margin-bottom: 0.5rem;
   }
   .guide p {
     color: var(--ink-soft);
+  }
+  .watch {
+    display: grid;
+    margin-top: 1rem;
+  }
+  .watch div {
+    padding-block: 0.75rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .watch dt {
+    font-weight: 600;
+    color: var(--forest-deep);
+  }
+  .watch dd {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .books {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+    margin-block: 1rem;
+  }
+  .books li {
+    display: grid;
+  }
+  .books strong {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--forest-deep);
+  }
+  .books span {
+    font-size: 0.88rem;
+    color: var(--ink-mute);
+  }
+  .orgs {
+    font-size: 0.92rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .orgs a {
+    color: var(--clay-deep);
+  }
+  .closing {
+    max-width: 760px;
+    margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+    text-align: center;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+  }
+  .closing strong {
+    color: var(--forest-deep);
   }
 
   .faq details {

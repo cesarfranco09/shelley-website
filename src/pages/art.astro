@@ -1,89 +1,71 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import Artwork from '../components/Artwork.astro';
+import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { mailto, site } from '../data/site';
+import { acrylic, watercolor, mosaic, digital, embroidery, masks, puzzles } from '../data/gallery';
 
-type Kind = 'ocean' | 'garden' | 'landscape' | 'window' | 'mosaic' | 'abstract' | 'sunset';
-type Ratio = '4/5' | '1/1' | '3/2' | '3/4';
+const works = [
+  ...acrylic.map((p) => ({ ...p, medium: 'Acrylic' })),
+  ...watercolor.map((p) => ({ ...p, medium: 'Watercolor' })),
+  ...mosaic.map((p) => ({ ...p, medium: 'Mosaic' })),
+  ...digital.map((p) => ({ ...p, medium: 'Digital' })),
+];
+// Interleave mediums so "All" shows a varied mix.
+const buckets = ['Acrylic', 'Watercolor', 'Mosaic', 'Digital'].map((m) => works.filter((w) => w.medium === m));
+const mixed: typeof works = [];
+for (let i = 0; buckets.some((b) => b[i]); i++) buckets.forEach((b) => b[i] && mixed.push(b[i]));
 
-// Replace these with real works: add `src: '/images/art/your-file.jpg'` to show a photo.
-const works: { title: string; medium: string; kind: Kind; seed: number; ratio: Ratio; src?: string }[] = [
-  { title: 'Malibu Morning', medium: 'Acrylic', kind: 'ocean', seed: 3, ratio: '4/5' },
-  { title: 'Garden in Bloom', medium: 'Watercolor', kind: 'garden', seed: 7, ratio: '1/1' },
-  { title: 'Seaside Window', medium: 'Acrylic', kind: 'window', seed: 2, ratio: '3/4' },
-  { title: 'Sunburst', medium: 'Mosaic', kind: 'mosaic', seed: 4, ratio: '1/1' },
-  { title: 'Evening Tide', medium: 'Digital', kind: 'sunset', seed: 5, ratio: '3/2' },
-  { title: 'Rolling Hills', medium: 'Watercolor', kind: 'landscape', seed: 6, ratio: '4/5' },
-  { title: 'Reverie', medium: 'Digital', kind: 'abstract', seed: 12, ratio: '1/1' },
-  { title: 'Point Dume Light', medium: 'Acrylic', kind: 'ocean', seed: 14, ratio: '3/2' },
-  { title: 'Wildflower Path', medium: 'Acrylic', kind: 'garden', seed: 15, ratio: '3/4' },
-  { title: 'Tidepool Tiles', medium: 'Mosaic', kind: 'mosaic', seed: 9, ratio: '4/5' },
-  { title: 'Canyon Afternoon', medium: 'Watercolor', kind: 'landscape', seed: 18, ratio: '3/2' },
-  { title: 'Golden Hour', medium: 'Digital', kind: 'sunset', seed: 20, ratio: '4/5' },
+const filters = [
+  { label: 'All', count: works.length },
+  ...['Acrylic', 'Watercolor', 'Mosaic', 'Digital'].map((m) => ({ label: m, count: works.filter((w) => w.medium === m).length })),
 ];
 
-const filters = ['All', 'Acrylic', 'Watercolor', 'Mosaic', 'Digital'];
+const gems = [
+  ['Agate', 'good luck'], ['Amber', 'protection'], ['Amethyst', 'love'], ['Green aventurine', 'good luck'],
+  ['Bloodstone', 'good health'], ['Blue agate', 'calming'], ['Carnelian', 'energy, creativity'], ['Calcite', 'protection'],
+  ['Citrine', 'protection from negativity'], ['Copper', 'healing'], ['Fluorite', 'cleansing'], ['Jade', 'wealth'],
+  ['Garnet', 'romance'], ['Mahogany jasper', 'harmony'], ['Malachite', 'healing'], ['Lapis', 'calming, healing'],
+  ['Moonstone', 'balancing'], ['Peridot', 'protection'], ['Red jasper', 'harmony'], ['Clear quartz', 'purity'],
+  ['Rose quartz', 'balance'], ['Smoky quartz', 'grounding'], ['Sodalite', 'tranquility'], ['Turquoise', 'healing'],
+  ['Tourmaline', 'balancing'], ['Tree agate', 'peace'], ['Unakite', 'trust'],
+];
 
-const handmade = [
-  {
-    icon: 'gem',
-    tone: 'icon-badge--gold',
-    title: 'Healing gemstone jewelry',
-    text: 'Handmade necklaces, earrings, bracelets, eyeglass holders, watches, hair ornaments and key rings crafted with crystals and semi-precious natural gemstones.',
-    kind: 'abstract',
-    seed: 31,
-  },
-  {
-    icon: 'needle',
-    tone: 'icon-badge--clay',
-    title: 'Embroidery',
-    text: 'Hand-stitched embroidery art — colorful florals and scenes worked thread by thread, each one a small meditation.',
-    kind: 'garden',
-    seed: 33,
-  },
-  {
-    icon: 'mask',
-    tone: 'icon-badge--sky',
-    title: 'Handmade cotton masks',
-    text: 'Soft, washable cotton masks sewn by Shelley. Every one is one-of-a-kind.',
-    kind: 'mosaic',
-    seed: 35,
-  },
-] as const;
+const jewelryPrices = [
+  ['Earrings', 'from $15–$25'],
+  ['Necklaces', 'from $50–$100'],
+  ['Watches', '$25–$75'],
+  ['Complete sets', 'up to $249'],
+];
 
-const puzzles = [
-  { title: 'Ocean Paradise', pieces: 550, kind: 'ocean' as Kind, seed: 41 },
-  { title: 'Garden Scene', pieces: 1000, note: '13 × 36 in', kind: 'garden' as Kind, seed: 42 },
-  { title: 'Renoir', pieces: 550, kind: 'landscape' as Kind, seed: 43 },
-  { title: 'Dogs on Couches', pieces: 550, kind: 'abstract' as Kind, seed: 44 },
-  { title: 'Coffee', pieces: 300, kind: 'sunset' as Kind, seed: 45 },
-  { title: 'Dog is Love', pieces: 100, kind: 'abstract' as Kind, seed: 46 },
+const mosaicPrices = [
+  ['Wall art, stepping stones & garden art', 'from $150'],
+  ['Mosaic pottery, 12″ pots', 'from $150'],
+  ['Mosaic pottery, 8″ pots', 'from $100'],
+  ['Four-sided mailboxes', 'from $150 per side'],
+  ['House, apartment & condo numbers', '$25 per number, $100 minimum'],
 ];
 ---
 
-<Base title="Art & Handmade" description="Impressionist art by Shelley Marks-Kramer — oceanscapes, landscapes, windowscapes and flowerscapes in acrylic, watercolor, mosaic and digital media, plus handmade gemstone jewelry, embroidery, masks and puzzles.">
+<Base title="Art & Handmade" description="Fine impressionist art by Shelley Marks-Kramer — acrylic and watercolor paintings, mosaics and digital iPad art, plus healing gemstone jewelry, embroidery, handmade masks and puzzles. All artwork is for sale.">
   <PageHero
-    eyebrow="The studio"
-    title='Impressionist art &amp; <em class="accent">handmade treasures</em>'
-    lede="Oceanscapes, landscapes, windowscapes, flowerscapes and peoplescapes — shown and exhibited since 1983, from Santa Monica to New York City, with collectors across the United States."
+    eyebrow="Fine impressionist art"
+    title='Paintings, mosaics &amp; <em class="accent">handmade treasures</em>'
+    lede="I have been creating art my entire life, using crayons, pastels, acrylic and watercolor paints, oil crayons, pen and ink and gouache — oceanscapes, landscapes, peoplescapes, windowscapes and floral arrangements painted from live flowers."
   >
     <div slot="actions" class="btn-row reveal" style="--delay:.24s; margin-top: 2rem">
       <a href="#gallery" class="btn">View the gallery <Icon name="arrow" /></a>
-      <a href={site.social.artSite} class="btn btn--ghost" target="_blank" rel="noopener">Full portfolio <Icon name="external" /></a>
+      <a href={site.social.artSite} class="btn btn--ghost" target="_blank" rel="noopener">Shelley-Marks-Kramer.com <Icon name="external" /></a>
     </div>
     <div class="palette-card reveal" style="--delay:.3s">
-      <p class="palette-card__title">Mediums</p>
-      <ul>
-        <li><span style="background:#5b8fa8"></span>Acrylic</li>
-        <li><span style="background:#e8a0a0"></span>Watercolor</li>
-        <li><span style="background:#d9a441"></span>Mosaics</li>
-        <li><span style="background:#8aa487"></span>Digital iPad art</li>
-        <li><span style="background:#c4694a"></span>Pastel, pen &amp; ink</li>
-        <li><span style="background:#25402f"></span>Etchings &amp; sketches</li>
-      </ul>
+      <p class="palette-card__title">All artwork is for sale</p>
+      <p>
+        Shown and exhibited since 1983, from Santa Monica to New York City, with collectors across the U.S. Commissions
+        welcome.
+      </p>
+      <a href={mailto('Art pricing inquiry')} class="link-arrow">Ask about pricing <Icon name="arrow" size={16} /></a>
     </div>
   </PageHero>
 
@@ -96,19 +78,25 @@ const puzzles = [
           <h2>Selected works</h2>
         </div>
         <div class="filters reveal" role="group" aria-label="Filter artwork by medium">
-          {filters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
+          {
+            filters.map((f, i) => (
+              <button type="button" data-filter={f.label} aria-pressed={i === 0 ? 'true' : 'false'}>
+                {f.label} <span>{f.count}</span>
+              </button>
+            ))
+          }
         </div>
       </div>
 
       <ul class="masonry" data-gallery>
         {
-          works.map((w, i) => (
-            <li data-medium={w.medium} class="reveal" style={`--delay:${(i % 3) * 0.06}s`}>
-              <button type="button" class="work" data-index={i} aria-label={`View ${w.title}, ${w.medium}`}>
-                <Artwork kind={w.kind} seed={w.seed} ratio={w.ratio} src={w.src} alt={w.title} />
+          mixed.map((w) => (
+            <li data-medium={w.medium}>
+              <button type="button" class="work" aria-label={`View ${w.title}, ${w.medium}`}>
+                <Photo photo={w} alt={`${w.title} — ${w.medium.toLowerCase()} by Shelley Marks-Kramer`} sizes="(min-width: 900px) 33vw, 50vw" />
                 <span class="work__meta">
                   <strong>{w.title}</strong>
-                  <span>{w.medium}</span>
+                  <span>{w.detail}</span>
                 </span>
               </button>
             </li>
@@ -126,7 +114,7 @@ const puzzles = [
     <button type="button" class="lightbox__close" data-close aria-label="Close"><Icon name="close" /></button>
     <button type="button" class="lightbox__nav lightbox__nav--prev" data-prev aria-label="Previous"><Icon name="arrow" /></button>
     <figure>
-      <div class="lightbox__art" data-art></div>
+      <img data-img alt="" />
       <figcaption>
         <strong data-title></strong>
         <span data-medium></span>
@@ -135,30 +123,99 @@ const puzzles = [
     <button type="button" class="lightbox__nav" data-next aria-label="Next"><Icon name="arrow" /></button>
   </dialog>
 
-  <!-- Handmade -->
+  <!-- Mosaic commissions -->
+  <section class="section section--paper" id="mosaics">
+    <div class="container split">
+      <div class="mosaic-photos reveal">
+        <Photo photo={mosaic[0]} ratio="3/4" alt="Mosaic stepping stone of Shelley’s hand" />
+        <Photo photo={mosaic[2]} ratio="3/4" alt="The Sun with Dishes mosaic wall" />
+      </div>
+      <div>
+        <span class="eyebrow reveal">One-of-a-kind mosaics</span>
+        <h2 class="reveal" style="margin-block:1rem 1.25rem">Made from glass, tiles, dishes, mirrors, jewelry — <em class="accent">or your items</em></h2>
+        <p class="lede reveal">
+          Wall hangings, pottery, candle holders, flower vases, mailboxes, boxes, stepping stones, trivets and house
+          numbers. Grout can be many different colors.
+        </p>
+        <dl class="prices reveal">
+          {
+            mosaicPrices.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a href={mailto('Mosaic commission')} class="btn btn--clay reveal">Commission a mosaic <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Jewelry -->
+  <section class="section" id="jewelry">
+    <div class="container split" style="align-items:start">
+      <div>
+        <span class="eyebrow reveal">Healing / energy jewelry</span>
+        <h2 class="reveal" style="margin-block:1rem 1.25rem">Jewelry to <em class="accent">adorn the soul</em></h2>
+        <p class="lede reveal">
+          Necklaces, earrings, bracelets, eyeglass holders, watches, hair ornaments and key rings, handmade with love from
+          crystals and semi-precious natural gemstones — used for thousands of years for healing, balancing the chakras,
+          cleansing, love and much more.
+        </p>
+        <dl class="prices reveal">
+          {
+            jewelryPrices.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="muted reveal">Prices vary with the stones used and combination orders of necklace, earrings and bracelet.</p>
+        <a href={mailto('Gemstone jewelry')} class="btn btn--clay reveal" style="margin-top:1.5rem">Order jewelry <Icon name="arrow" /></a>
+      </div>
+      <div class="card gems reveal" style="--delay:.1s">
+        <span class="icon-badge icon-badge--gold"><Icon name="gem" /></span>
+        <h3>Stones used in Shelley’s jewelry</h3>
+        <ul>
+          {
+            gems.map(([g, m]) => (
+              <li>
+                <strong>{g}</strong>
+                <span>{m}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Masks & embroidery -->
   <section class="section section--paper" id="handmade">
     <div class="container">
       <div class="section-head section-head--center reveal">
         <span class="eyebrow">Handmade by Shelley</span>
-        <h2>Wearable art &amp; <em class="accent">heartfelt gifts</em></h2>
-        <p class="lede">Every piece is made by hand in Malibu — perfect for gifting, or for treating yourself.</p>
+        <h2>Masks &amp; <em class="accent">embroidery</em></h2>
+        <p class="lede">Handmade cotton masks — all one of a kind — and embroidery on clothing, pillows and more.</p>
       </div>
-      <div class="grid grid-3">
+      <div class="handmade-grid">
         {
-          handmade.map((h, i) => (
-            <article class="card handmade reveal" style={`--delay:${i * 0.08}s`}>
-              <Artwork kind={h.kind} seed={h.seed} ratio="3/2" />
-              <div class="handmade__body">
-                <span class={`icon-badge ${h.tone}`}><Icon name={h.icon} /></span>
-                <h3>{h.title}</h3>
-                <p>{h.text}</p>
-                <a href={mailto(`Inquiry: ${h.title}`)} class="link-arrow">
-                  Inquire <Icon name="arrow" size={16} />
-                </a>
-              </div>
-            </article>
+          [...masks, ...embroidery].map((p, i) => (
+            <figure class="reveal" style={`--delay:${(i % 4) * 0.05}s`}>
+              <Photo photo={p} ratio="1/1" alt={`${p.title} — ${p.detail?.toLowerCase()} by Shelley`} />
+              <figcaption>
+                <strong>{p.title}</strong>
+                <span>{p.detail}</span>
+              </figcaption>
+            </figure>
           ))
         }
+      </div>
+      <div class="center mt-lg">
+        <a href={mailto('Handmade masks or embroidery')} class="btn btn--ghost">Inquire about handmade pieces <Icon name="arrow" /></a>
       </div>
     </div>
   </section>
@@ -171,20 +228,20 @@ const puzzles = [
           <span class="eyebrow">Puzzles by Shelley</span>
           <h2>Piece together something <em class="accent">beautiful</em></h2>
         </div>
-        <p class="lede reveal" style="max-width:40ch">Jigsaw puzzles featuring Shelley’s artwork — from a quick 100-piece treat to a 1,000-piece panorama.</p>
+        <p class="lede reveal" style="max-width:40ch">Jigsaw puzzles from a quick 100-piece treat to a 1,000-piece panorama.</p>
       </div>
       <div class="puzzles">
         {
           puzzles.map((p, i) => (
             <article class="puzzle reveal" style={`--delay:${(i % 3) * 0.06}s`}>
               <div class="puzzle__art">
-                <Artwork kind={p.kind} seed={p.seed} ratio="1/1" />
+                <Photo photo={p} ratio="1/1" alt={`${p.title} puzzle`} />
                 <span class="puzzle__pieces">
-                  <Icon name="puzzle" size={16} /> {p.pieces.toLocaleString('en-US')} pcs
+                  <Icon name="puzzle" size={16} /> {p.detail?.split(' · ')[0]}
                 </span>
               </div>
               <h3>{p.title}</h3>
-              {p.note && <p class="muted">{p.note}</p>}
+              {p.detail?.includes('·') && <p class="muted">{p.detail.split(' · ')[1]}</p>}
             </article>
           ))
         }
@@ -195,45 +252,27 @@ const puzzles = [
     </div>
   </section>
 
-  <CtaBand title='Bring a little <em class="accent" style="color:#f3b79f">beauty</em> home' text="Original paintings, prints, commissions and handmade gifts are available. Tell Shelley what caught your eye." />
+  <CtaBand title='Don’t miss your chance at a <em class="accent" style="color:#f3b79f">one-of-a-kind</em> piece' text="Original paintings, mosaics, commissions, jewelry and handmade gifts are available. Tell Shelley what caught your eye." />
 </Base>
 
 <style>
   .palette-card {
     justify-self: end;
     width: 100%;
-    max-width: 360px;
+    max-width: 380px;
     padding: 1.6rem;
     border-radius: var(--radius-lg);
     background: var(--white);
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
-  }
-  .palette-card__title {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 1rem;
-  }
-  .palette-card ul {
-    list-style: none;
-    padding: 0;
+    color: var(--ink-soft);
     display: grid;
     gap: 0.75rem;
   }
-  .palette-card li {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+  .palette-card__title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
     color: var(--forest-deep);
-  }
-  .palette-card li span {
-    width: 22px;
-    height: 22px;
-    border-radius: 50% 40% 55% 45%;
-    box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.15);
   }
 
   .gallery-head {
@@ -266,6 +305,11 @@ const puzzles = [
       background-color 0.25s,
       color 0.25s;
   }
+  .filters button span {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin-left: 0.2rem;
+  }
   .filters button:hover {
     color: var(--forest-deep);
   }
@@ -273,19 +317,31 @@ const puzzles = [
     background: var(--forest);
     color: #fff;
   }
+  @media (max-width: 600px) {
+    .filters {
+      border-radius: var(--radius);
+    }
+  }
 
   .masonry {
     list-style: none;
     padding: 0;
-    columns: 3 280px;
+    columns: 3 260px;
     column-gap: 1.5rem;
   }
   .masonry li {
     break-inside: avoid;
     margin-bottom: 1.5rem;
+    animation: fade-in 0.5s var(--ease) both;
   }
   .masonry li.is-hidden {
     display: none;
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
   }
   .work {
     display: block;
@@ -296,34 +352,34 @@ const puzzles = [
     text-align: left;
     cursor: zoom-in;
   }
-  .work :global(.artwork) {
+  .work :global(.photo) {
     transition:
       transform 0.6s var(--ease),
       box-shadow 0.6s var(--ease);
   }
-  .work:hover :global(.artwork) {
+  .work:hover :global(.photo) {
     transform: translateY(-4px);
     box-shadow: var(--shadow);
   }
   .work__meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 0.8rem 0.2rem 0;
+    display: grid;
+    padding: 0.7rem 0.2rem 0;
   }
   .work__meta strong {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: 1.15rem;
+    font-size: 1.12rem;
+    line-height: 1.25;
     color: var(--forest-deep);
   }
   .work__meta span {
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     color: var(--ink-mute);
   }
 
   .lightbox {
-    width: min(1100px, 100vw - 2rem);
+    width: min(1200px, 100vw - 2rem);
+    max-width: none;
     max-height: calc(100vh - 2rem);
     padding: 0;
     border: 0;
@@ -339,30 +395,31 @@ const puzzles = [
     animation: lb-in 0.4s var(--ease);
   }
   .lightbox::backdrop {
-    background: rgb(24 43 32 / 0.88);
+    background: rgb(24 43 32 / 0.9);
     backdrop-filter: blur(6px);
   }
   .lightbox figure {
     display: grid;
     justify-items: center;
     gap: 1rem;
+    min-width: 0;
   }
-  .lightbox__art {
-    width: 100%;
-    display: grid;
-    place-items: center;
-  }
-  .lightbox__art :global(.artwork) {
+  .lightbox img {
+    max-width: 100%;
     max-height: calc(100vh - 9rem);
     width: auto;
-    max-width: 100%;
-    height: calc(100vh - 9rem);
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
   }
   .lightbox figcaption {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1rem;
     align-items: baseline;
     color: rgb(255 255 255 / 0.7);
+    text-align: center;
   }
   .lightbox figcaption strong {
     font-family: var(--font-display);
@@ -394,6 +451,7 @@ const puzzles = [
     position: fixed;
     top: 1rem;
     right: 1rem;
+    z-index: 1;
   }
   @media (max-width: 700px) {
     .lightbox[open] {
@@ -406,10 +464,6 @@ const puzzles = [
     .lightbox__nav--prev {
       justify-self: end;
     }
-    .lightbox__art :global(.artwork) {
-      height: auto;
-      width: 100%;
-    }
   }
   @keyframes lb-in {
     from {
@@ -418,30 +472,83 @@ const puzzles = [
     }
   }
 
-  .handmade {
+  .mosaic-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .mosaic-photos :global(.photo:nth-child(2)) {
+    margin-top: 3rem;
+  }
+  .prices {
+    margin-block: 2rem 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .prices div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .prices dt {
+    color: var(--ink-soft);
+  }
+  .prices dd {
+    margin: 0;
+    font-weight: 600;
+    color: var(--forest-deep);
+    text-align: right;
+  }
+
+  .gems ul {
+    list-style: none;
     padding: 0;
-    overflow: hidden;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+    gap: 0.25rem 1.5rem;
+  }
+  .gems li {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.93rem;
   }
-  .handmade :global(.artwork) {
-    border-radius: 0;
+  .gems strong {
+    font-weight: 600;
+    color: var(--forest-deep);
   }
-  .handmade__body {
-    position: relative;
-    padding: 0 clamp(1.5rem, 3vw, 2rem) 2rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  .gems span {
+    color: var(--ink-mute);
+    text-align: right;
   }
-  .handmade__body .icon-badge {
-    margin-top: -27px;
-    border: 4px solid var(--white);
-    box-sizing: content-box;
+
+  .handmade-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
-  .handmade__body p {
-    flex: 1;
-    margin-bottom: 1.4rem;
+  @media (min-width: 800px) {
+    .handmade-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  .handmade-grid figcaption {
+    display: grid;
+    padding-top: 0.6rem;
+  }
+  .handmade-grid strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--forest-deep);
+  }
+  .handmade-grid span {
+    font-size: 0.82rem;
+    color: var(--ink-mute);
   }
 
   .puzzles {
@@ -463,10 +570,10 @@ const puzzles = [
     position: relative;
     margin-bottom: 0.8rem;
   }
-  .puzzle__art :global(.artwork) {
+  .puzzle__art :global(.photo) {
     transition: transform 0.5s var(--ease);
   }
-  .puzzle:hover .puzzle__art :global(.artwork) {
+  .puzzle:hover .puzzle__art :global(.photo) {
     transform: rotate(-2deg) scale(1.02);
   }
   .puzzle__pieces {
@@ -502,18 +609,20 @@ const puzzles = [
   );
 
   const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
-  const artSlot = dialog.querySelector<HTMLElement>('[data-art]')!;
+  const img = dialog.querySelector<HTMLImageElement>('[data-img]')!;
   const titleEl = dialog.querySelector<HTMLElement>('[data-title]')!;
   const mediumEl = dialog.querySelector<HTMLElement>('[data-medium]')!;
   let current = 0;
 
   const visible = () => items.filter((li) => !li.classList.contains('is-hidden'));
   const show = (li: HTMLLIElement) => {
-    const btn = li.querySelector<HTMLButtonElement>('.work')!;
+    const thumb = li.querySelector('img')!;
     current = visible().indexOf(li);
-    artSlot.replaceChildren(btn.querySelector('.artwork')!.cloneNode(true));
-    titleEl.textContent = btn.querySelector('strong')!.textContent;
-    mediumEl.textContent = li.dataset.medium ?? '';
+    img.src = thumb.currentSrc || thumb.src;
+    img.alt = thumb.alt;
+    titleEl.textContent = li.querySelector('.work__meta strong')!.textContent;
+    const detail = li.querySelector('.work__meta span')!.textContent;
+    mediumEl.textContent = [li.dataset.medium, detail].filter(Boolean).join(' · ');
   };
   const step = (dir: number) => {
     const list = visible();

@@ -1,89 +1,120 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import Artwork from '../components/Artwork.astro';
+import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
+import { people } from '../data/gallery';
+import { site } from '../data/site';
 
 const timeline = [
   {
     year: '1974',
     title: 'Creative Environments Flowers & Plantscapes',
-    text: 'Shelley’s first business brought tropical paradises indoors — interior flowers, plantscapes and artwork for homes, offices, restaurants, showrooms, parties, weddings and bar/bat mitzvahs.',
+    text: 'Shelley began creating tropical paradises with interior flowers, plantscapes and artwork for homes, offices, restaurants, showrooms, parties, weddings and bar/bat mitzvahs.',
+  },
+  {
+    year: '1978',
+    title: 'On NBC’s 6 pm News',
+    text: 'Featured two nights on David Horowitz’s consumer segment as a professional plant interiorscaper, with before-and-after looks at how plants brighten up rooms.',
+  },
+  {
+    year: '1982',
+    title: 'Losing her mom',
+    text: 'Her mother, Shirley Marks — a Revlon beauty consultant for 20 years in major department stores across the U.S. — died of cancer at 56. Shelley began researching why there is so much cancer.',
   },
   {
     year: '1983',
-    title: 'Art on the walls — and in the world',
-    text: 'She began showing and exhibiting her artwork across the United States, from Santa Monica to New York City, building a community of collectors from coast to coast.',
+    title: 'Exhibiting her art',
+    text: 'Shelley began showing her artwork across the United States, from Santa Monica to New York City, building a community of collectors from coast to coast.',
   },
   {
-    year: 'Survivor',
-    title: 'A turning point',
-    text: 'Surviving cancer changed everything. Shelley made it her second-half-of-life mission to educate the public about the risks of toxic ingredients in everyday products.',
+    year: '1987',
+    title: 'Cancer Prevention Coalition, Los Angeles',
+    text: 'Under Dr. Samuel S. Epstein, M.D., she became Los Angeles director of the Cancer Prevention Coalition, educating the public with seminars and scientific literature.',
   },
   {
-    year: 'Educator',
-    title: 'Cancer Prevention Coalition — Los Angeles',
-    text: 'Appointed director of the local Los Angeles office of the Cancer Prevention Coalition, founded by Dr. Samuel S. Epstein, M.D., to raise awareness of avoidable causes of cancer.',
+    year: '2003',
+    title: '“Plant Lady to the Stars”',
+    text: 'Filmed in the UK for BBC’s Sky 1 as flower and plant specialist to the stars, on a show about the service people behind the movie stars.',
   },
   {
     year: 'Today',
     title: 'Healthy Communications',
-    text: 'Combining college degrees, certification in nutritional consulting and decades of hands-on experience to guide families toward safer choices — while painting every chance she gets.',
+    text: 'Public health and cancer prevention educator, consultant in environmental health, nutrition, personal hygiene and beauty care — and still painting every chance she gets.',
   },
 ];
 
-const values = [
-  { icon: 'heart', title: 'Warm & caring', text: 'Every conversation starts with listening. Your health goals, your pace.' },
-  { icon: 'book', title: 'Education first', text: 'Understand the “why” behind every recommendation so you can decide with confidence.' },
-  { icon: 'shield', title: 'Trusted sources', text: 'Only products from established manufacturers with decades-long track records.' },
-  { icon: 'sparkles', title: 'Mind, body & spirit', text: 'Wellness is more than ingredients — beauty and creativity heal, too.' },
+const roles = [
+  { icon: 'ribbon', tone: 'icon-badge--clay', title: 'Los Angeles Director, Cancer Prevention Coalition', text: 'Educating the public on avoidable risks of chemicals and controversial ingredients in everyday products since 1987.' },
+  { icon: 'users', tone: '', title: 'Santa Monica–Malibu School District', text: 'Former member of the District Advisory Committee for Health and Safety.' },
+  { icon: 'sun', tone: 'icon-badge--gold', title: 'Skin cancer prevention', text: 'Worked with the California State Department of Health Skin Cancer Prevention Program.' },
+  { icon: 'shield', tone: 'icon-badge--sky', title: 'Safe cosmetics advocacy', text: 'Worked with the Campaign for Safe Cosmetics and the Environmental Working Group.' },
+  { icon: 'plant', tone: '', title: 'California Interior Plantscape Association', text: 'A founding member of the association for professional interior plantscapers.' },
+  { icon: 'flower', tone: 'icon-badge--clay', title: 'Malibu Garden Club', text: 'Board member of the Malibu Garden Club, established in 1956.' },
 ] as const;
+
+const andrew = [
+  { year: '1988', text: 'Born three months early, weighing just 2 lbs 5 oz. Doctors said he might never walk — he proved them all wrong.' },
+  { year: '2007', text: 'Graduated Malibu High School with honors, lettered in varsity baseball, and received the Distinguished Student Award.' },
+  { year: '2009', text: 'Graduated valedictorian of the first UCLA Extension Pathway class, was interviewed by NBC News, and received UCEA’s Outstanding Nontraditional Student Award — regionally and nationally.' },
+  { year: '2017', text: 'Graduated Santa Monica College with a 3.8 GPA on the Honor Roll, with an AA in Business and Leadership.' },
+  { year: 'Today', text: 'A Best Buddies Ambassador with 3 gold, 3 silver and a bronze in Special Olympics tennis. He works, lives in his own apartment, drives, and plays pickleball and tennis.' },
+];
+
 ---
 
-<Base title="About Shelley" description="Meet Shelley Marks-Kramer — entrepreneur since 1974, cancer survivor, Cancer Prevention Coalition director in Los Angeles, nutritional consultant, safe-products educator and impressionist artist.">
+<Base title="About Shelley" description="Meet Shelley Marks-Kramer — skin cancer survivor, Los Angeles Director of the Cancer Prevention Coalition since 1987, consumer health educator, founder of Creative Environments (1974) and impressionist artist.">
   <PageHero
     eyebrow="About Shelley"
-    title='Health professional, educator &amp; <em class="accent">lifelong artist</em>'
-    lede="Shelley Marks-Kramer is a warm and caring health professional and artist whose energy, breadth of knowledge and spirituality make her a true healer — and a trusted guide for anyone ready to live a little cleaner."
+    title='Educator, advocate &amp; <em class="accent">lifelong artist</em>'
+    lede="Shelley Marks-Kramer is a cancer survivor who is passionate about the consumer-products health issue: harmful, questionable and controversial ingredients in the personal care, beauty and household products we use on our bodies and in our homes."
   >
     <div class="about-hero-art reveal" style="--delay:.2s">
-      <Artwork kind="sunset" seed={9} ratio="4/5" eager />
+      <Photo photo={people.portrait} ratio="4/5" eager alt="Shelley Marks-Kramer" />
     </div>
   </PageHero>
 
   <section class="section">
-    <div class="container split">
+    <div class="container split" style="align-items:start">
       <div class="prose reveal">
-        <span class="eyebrow">Her story</span>
-        <h2>Self-employed for more than three-quarters of her life</h2>
+        <span class="eyebrow">In her words</span>
+        <h2>“Everyone has the right to know”</h2>
         <p>
-          Shelley has been starting and running her own businesses for most of her life. She holds several college
-          degrees, years of hands-on experience, and certifications in nutritional consulting — and she brings every bit
-          of that to the people she works with.
+          My name is Shelley Marks-Kramer and I have been successfully self-employed, starting and running several of my
+          own businesses, for more than three-quarters of my life. I am constantly appreciative of learning new health
+          modalities, alternative wellness techniques, and organic growing and eating. I hold several college degrees,
+          have many years of hands-on experience, certifications in nutritional and beauty consulting, and memberships in
+          many health and wellness organizations and associations.
         </p>
         <p>
-          Her path to wellness education is personal. As a cancer survivor, Shelley is passionate about helping
-          consumers recognize harmful ingredients in the personal care products, beauty cosmetics and household
-          cleaners they use every day — and about pointing them toward safe, effective alternatives.
+          I have been researching why there is so much cancer in our world ever since my mom died of cancer at age 56,
+          too young, in 1982. I have also had many skin cancers removed since my late teens, including basal and squamous
+          cell tumors on my face.
         </p>
         <p>
-          Alongside her health work, Shelley has created art her entire life, in crayon, pastel, acrylic and
-          watercolor, oil crayon, pen and ink, etchings, sketches, greeting cards, mosaics and digital iPad painting.
+          As Director of the Los Angeles office of the Cancer Prevention Coalition, we educate the public with seminars and
+          scientific literature on avoidable risks of chemicals and controversial ingredients in everyday personal hygiene
+          and beauty products. Everyone has the right to know about the safety-conscious alternatives available — and then
+          they can make safe, logical decisions and product choices.
         </p>
+        <p><strong>I am happy to help you read labels and understand the chemicals you might be using.</strong></p>
       </div>
-      <div class="values reveal" style="--delay:.1s">
-        {
-          values.map((v) => (
-            <div class="values__item">
-              <span class="icon-badge"><Icon name={v.icon} /></span>
-              <div>
-                <h3>{v.title}</h3>
-                <p>{v.text}</p>
-              </div>
-            </div>
-          ))
-        }
+      <div class="side reveal" style="--delay:.1s">
+        <figure class="side__photo">
+          <Photo photo={people.seminar} alt="Shelley presenting safe, effective products at a health seminar" />
+          <figcaption>Presenting safe alternatives at a health seminar</figcaption>
+        </figure>
+        <div class="side__row">
+          <figure class="side__photo">
+            <Photo photo={people.mom} ratio="4/5" alt="Shelley and her mom at Shelley’s wedding, 1979" />
+            <figcaption>With Mom at my wedding, 1979 — my first bridal bouquet</figcaption>
+          </figure>
+          <figure class="side__photo">
+            <Photo photo={people.young} ratio="4/5" alt="Shelley as a young girl in the garden" />
+            <figcaption>I started gardening early in life</figcaption>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -97,7 +128,7 @@ const values = [
       <ol class="timeline">
         {
           timeline.map((t, i) => (
-            <li class="reveal" style={`--delay:${i * 0.05}s`}>
+            <li class="reveal" style={`--delay:${i * 0.04}s`}>
               <span class="timeline__year">{t.year}</span>
               <div class="timeline__body">
                 <h3>{t.title}</h3>
@@ -112,22 +143,86 @@ const values = [
 
   <section class="section">
     <div class="container">
-      <div class="roles grid grid-3">
-        <div class="card reveal">
-          <span class="icon-badge icon-badge--clay"><Icon name="ribbon" /></span>
-          <h3>Cancer prevention advocate</h3>
-          <p>Director of the local Los Angeles office of the Cancer Prevention Coalition, sharing information on reducing avoidable exposures.</p>
+      <div class="section-head reveal">
+        <span class="eyebrow">Service &amp; affiliations</span>
+        <h2>Active in health &amp; community</h2>
+      </div>
+      <div class="grid grid-3">
+        {
+          roles.map((r, i) => (
+            <div class="card reveal" style={`--delay:${(i % 3) * 0.06}s`}>
+              <span class={`icon-badge ${r.tone}`}>
+                <Icon name={r.icon} />
+              </span>
+              <h3>{r.title}</h3>
+              <p>{r.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section class="section section--forest" id="videos">
+    <div class="container split">
+      <div class="reveal">
+        <span class="eyebrow" style="color:#f3b79f">Videos</span>
+        <h2 style="margin-block:1rem 1.25rem">Shelley on TV</h2>
+        <div class="prose prose--light">
+          <p>
+            <strong>NBC 6 pm News, 1978.</strong> Shelley Marks (Kramer), interviewed by David Horowitz on Tuesday and
+            Thursday nights as an interior plant specialist. Scroll ahead to #7 in the playlist to see a 1997 NBC News
+            segment with the FDA, Dr. Samuel S. Epstein, M.D., and a cosmetics manufacturer on questionable chemicals in
+            everyday products.
+          </p>
+          <p>
+            Also on Shelley’s channel: dancing on a cruise ship — winning “Dancing with the Crew” — and dancing at the Bel
+            Air Hotel in 2013, just seven weeks after having both knees replaced.
+          </p>
+          <p class="muted-light">Coming soon: BBC’s “Plant Lady to the Stars” (2003) and Fox 13 News with Shelley as CPC director (2013).</p>
         </div>
-        <div class="card reveal" style="--delay:.08s">
-          <span class="icon-badge"><Icon name="leaf" /></span>
-          <h3>Nutritional consultant</h3>
-          <p>Certified in nutritional consulting, helping clients choose clean, well-made nutritional products that fit their lives.</p>
-        </div>
-        <div class="card reveal" style="--delay:.16s">
-          <span class="icon-badge icon-badge--gold"><Icon name="sparkles" /></span>
-          <h3>Safe products &amp; beauty consultant</h3>
-          <p>An educator on safe products for body and home, and a beauty consultant for clean, non-toxic cosmetics.</p>
-        </div>
+        <a href={site.social.youtube} class="btn btn--light" target="_blank" rel="noopener" style="margin-top:1.5rem">
+          <Icon name="youtube" /> Visit Shelley’s YouTube
+        </a>
+      </div>
+      <div class="video reveal" style="--delay:.1s">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/UGLLO0N57B4"
+          title="Shelley Marks on NBC News, 1978"
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Andrew -->
+  <section class="section" id="andrew">
+    <div class="container split" style="align-items:start">
+      <div class="andrew__photos reveal">
+        <Photo photo={people.andrew} ratio="4/5" alt="Andrew Sean Kramer" />
+        <Photo photo={people['andrew-tennis']} ratio="4/5" alt="Andrew at Special Olympics tennis" />
+        <Photo photo={people['andrew-pathway']} ratio="3/2" alt="Andrew with his UCLA Pathway class" class="andrew__wide" />
+      </div>
+      <div>
+        <span class="eyebrow reveal">Family</span>
+        <h2 class="reveal" style="margin-block:1rem 1.25rem">My son, <em class="accent">Andrew Sean Kramer</em></h2>
+        <ol class="andrew reveal">
+          {
+            andrew.map((a) => (
+              <li>
+                <span>{a.year}</span>
+                <p>{a.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <blockquote class="andrew__quote reveal">
+          “One of the definitions of a scholar is someone who educates themselves for their whole life. Though he is still
+          young — Andrew Kramer is definitely a scholar.”
+          <cite>Eric Latham, Director, UCLA Pathway Program, 2009</cite>
+        </blockquote>
       </div>
     </div>
   </section>
@@ -137,7 +232,7 @@ const values = [
 
 <style>
   .about-hero-art {
-    max-width: 380px;
+    max-width: 360px;
     justify-self: end;
     width: 100%;
     padding: 10px;
@@ -146,32 +241,25 @@ const values = [
     box-shadow: var(--shadow-lg);
     rotate: 3deg;
   }
+  .about-hero-art :global(.photo) {
+    border-radius: calc(var(--radius-lg) - 8px);
+  }
   .prose h2 {
     margin-block: 1rem 0.5rem;
   }
-  .values {
+  .side {
     display: grid;
     gap: 1rem;
   }
-  .values__item {
-    display: flex;
-    gap: 1.2rem;
-    padding: 1.4rem;
-    border-radius: var(--radius);
-    background: var(--white);
-    border: 1px solid var(--line);
+  .side__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
-  .values__item .icon-badge {
-    margin: 0;
-    flex: none;
-  }
-  .values__item h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
-  }
-  .values__item p {
-    color: var(--ink-soft);
-    font-size: 0.97rem;
+  .side__photo figcaption {
+    padding-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ink-mute);
   }
 
   .timeline {
@@ -195,13 +283,13 @@ const values = [
     display: grid;
     grid-template-columns: 7.5rem 1fr;
     gap: 2.5rem;
-    padding-block: 1.6rem;
+    padding-block: 1.4rem;
   }
   .timeline li::after {
     content: '';
     position: absolute;
     left: calc(7.5rem - 6px);
-    top: 2.1rem;
+    top: 1.9rem;
     width: 13px;
     height: 13px;
     border-radius: 50%;
@@ -233,11 +321,86 @@ const values = [
     }
     .timeline li::after {
       left: 0;
-      top: 2rem;
+      top: 1.8rem;
     }
     .timeline__year {
       text-align: left;
       font-size: 1.2rem;
     }
+  }
+
+  .prose--light p {
+    color: rgb(231 239 230 / 0.85);
+  }
+  .prose--light strong {
+    color: #fff;
+  }
+  .muted-light {
+    font-size: 0.92rem;
+    color: rgb(231 239 230 / 0.6) !important;
+  }
+  .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--forest-deep);
+    box-shadow: var(--shadow-lg);
+  }
+  .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .andrew__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .andrew__photos :global(.andrew__wide) {
+    grid-column: 1 / -1;
+  }
+  .andrew {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.25rem;
+  }
+  .andrew li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .andrew span {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--clay);
+  }
+  .andrew p {
+    color: var(--ink-soft);
+  }
+  .andrew__quote {
+    margin-top: 2rem;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--clay);
+    background: var(--paper);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: var(--forest-deep);
+  }
+  .andrew__quote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.85rem;
+    color: var(--ink-mute);
   }
 </style>

@@ -1,0 +1,43 @@
+---
+import type { Photo } from '../data/gallery';
+
+interface Props {
+  photo: Photo;
+  alt?: string;
+  class?: string;
+  eager?: boolean;
+  /** Crop to a fixed ratio (e.g. "4/5") instead of the photo's own shape. */
+  ratio?: string;
+  sizes?: string;
+}
+
+const { photo, alt = photo.title, class: className = '', eager = false, ratio, sizes } = Astro.props;
+const aspect = ratio ?? `${photo.width}/${photo.height}`;
+---
+
+<figure class={`photo ${className}`} style={`aspect-ratio:${aspect}`}>
+  <img
+    src={photo.src}
+    alt={alt}
+    width={photo.width}
+    height={photo.height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    sizes={sizes}
+  />
+</figure>
+
+<style>
+  .photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--paper);
+    width: 100%;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
